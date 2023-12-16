@@ -1,0 +1,21 @@
+{
+  "name": "ee-ctf",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@bravo68web/eslint-config": "^1.2.2",
+    "@bravo68web/prettier-config": "^1.2.2",
+    "@bravo68web/tsconfig": "^1.2.2",
+    "prettier": "^3.1.0",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.9.0",
+  "engines": {
+    "node": ">=18"
+  }
+}
