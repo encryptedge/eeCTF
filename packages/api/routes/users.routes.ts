@@ -1,7 +1,9 @@
 import { Hono } from "hono";
 
-const router = new Hono();
+import { UserController } from "../controllers/users.controller";
 
-router.get("/", )
+export const userRoutes = new Hono();
+const contoller = new UserController();
 
-export default router;
+userRoutes.post("/register", contoller.registerUser);
+userRoutes.post("/verify", contoller.verifyUser);
