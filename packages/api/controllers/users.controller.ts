@@ -28,4 +28,29 @@ export class UserController extends UserService {
             });
         }
     };
+
+    public loginUser = async (ctx: Context) => {
+        try {
+            const reqBody = await ctx.req.json();
+            const data = await this.loginUserS(reqBody);
+            return ctx.json(data);
+        }
+        catch (error: any) {
+            return ctx.json({
+                error: error.message
+            });
+        }
+    };
+
+    public whoami = async (ctx: Context) => {
+        try {
+            const data = await this.whoamiS(ctx);
+            return ctx.json(data);
+        }
+        catch (error: any) {
+            return ctx.json({
+                error: error.message
+            });
+        }
+    }
 }

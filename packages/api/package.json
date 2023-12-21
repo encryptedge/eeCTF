@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "dev": "nodemon --ext ts --exec \"node --loader @esbuild-kit/esm-loader\" index.ts",
+    "dev:no-reload": "node --loader @esbuild-kit/esm-loader index.ts",
+    "schema": "npm run schema:fetch && npm run schema:generate",
     "schema:fetch": "bash ./scripts/fetch-schema.sh",
     "schema:generate": "graphql-codegen --config codegen.yml",
-    "setup": "bash ./scripts/init.sh",
-    "dev": "node --loader @esbuild-kit/esm-loader index.ts"
+    "setup": "bash ./scripts/init.sh"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +34,6 @@
     "hono": "^3.11.7",
     "hyperflake": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
-    "knex": "^3.1.0",
     "nodemailer": "^6.9.7",
     "zod": "^3.22.4"
   }

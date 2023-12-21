@@ -21,3 +21,13 @@ interface IUserLoginInput {
 interface IUserVerifyInput {
     otp: string;
 }
+
+interface ITeamCreateInput {
+    team_name: string;
+    join_code: string;
+}
+
+interface ITeamJoinInput {
+    join_code: string;
+    user_id: string;
+}

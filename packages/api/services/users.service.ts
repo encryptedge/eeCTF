@@ -7,6 +7,7 @@ import { Mutation_Root, Users_Insert_Input } from "../graphql/types";
 import { client } from "../helpers/gqlClient";
 import sendmail from "../helpers/mailer";
 import { genOTP } from "../libs";
+import { authAdapter } from "../helpers/authAdapter";
 
 export class UserService {
     public registerUserS = async (userRegisterInput: IUserRegisterInput) => {
@@ -61,6 +62,8 @@ export class UserService {
                 else {
                     throw new Error("Something went wrong");
                 }
+            } else {
+                throw new Error("Something went wrong");
             }
         }
         catch (error: any) {
@@ -101,6 +104,122 @@ export class UserService {
         }
         catch (error: any) {
             throw new Error(error.response.errors[0].message);
+        }        
+    };
+
+    public loginUserS = async (userLoginInput: IUserLoginInput) => {
+        try {
+            const { email, password } = userLoginInput;
+            const query = gql`
+            query loginUser($email: String!) {
+                users(where: {email: {_eq: $email}}) {
+                    id
+                    first_name
+                    last_name
+                    email
+                    is_admin
+                    hash
+                    salt
+                }
+            }
+            `;
+
+            const data: any = await client.request(query, {
+                email
+            });
+
+            if(data.users.length) {
+                const user = data.users[0];
+                const hash = crypto
+                    .pbkdf2Sync(password, user.salt, 1000, 64, "sha512")
+                    .toString("hex");
+
+                if(hash === user.hash) {
+                    return {
+                        message: "Login successful",
+                        token: authAdapter.sign({
+                            id: user.id,
+                            isAdmin: user.is_admin
+                        })
+                    };
+                }
+                else {
+                    throw new Error("Invalid credentials");
+                }
+            }
+            else {
+                throw new Error("Invalid credentials");
+            }
+        }
+        catch (error: any) {
+            throw new Error(error.response.errors[0].message);
+        }        
+    };
+
+    public whoamiS = async (ctx: any) => {
+        try {
+            const user = ctx.get("user");
+            const query = gql`
+            query whoami($id: String!) {
+                users_by_pk(id: $id) {
+                    id
+                    first_name
+                    last_name
+                    email
+                    is_admin
+
+                    team {
+                        id
+                        name
+                    }
+
+                    scores {
+                        id
+                        challenge {
+                            id
+                            point
+                            name
+                            machine {
+                                id
+                                name
+                            }
+                        }
+                    }
+
+                    submissions {
+                        id
+                        submited_flag
+                        challenge {
+                            id
+                            point
+                            name
+                            machine {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+            `;
+
+            const data: any = await client.request(query, {
+                id: user.id
+            });
+
+            if(data.users_by_pk) {
+                return data.users_by_pk;
+            }
+            else {
+                throw new Error("User not found");
+            }
+        }
+        catch (error: any) {
+            if(error.response) {
+                throw new Error(error.response.errors[0].message);
+            }
+            else
+                throw new Error(error.message);
         }        
     };
 }
