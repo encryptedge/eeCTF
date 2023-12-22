@@ -1,7 +1,14 @@
 import { Hono } from "hono";
 
-const router = new Hono();
+import { UserController } from "../controllers/users.controller";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
+import { AUTH_PERMS } from "../extras/permissions";
 
-router.get("/", )
+export const userRoutes = new Hono();
+const contoller = new UserController();
+const auth = new AuthMiddleware();
 
-export default router;
+userRoutes.post("/register", contoller.registerUser);
+userRoutes.post("/verify", contoller.verifyUser);
+userRoutes.post("/login", contoller.loginUser);
+userRoutes.get("/whoami", auth.authenticate(AUTH_PERMS.AUTHENTICATED), contoller.whoami);

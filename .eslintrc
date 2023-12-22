@@ -1,3 +1,9 @@
 {
-    "extends": ["@bravo68web"]
+    "extends": ["@bravo68web"],
+    "rules": {
+        "sonarjs/cognitive-complexity": "off",
+        "unicorn/no-array-reduce": "off",
+        "unicorn/filename-case": "off",
+        "@typescript-eslint/no-empty-interface": "off"
+    }
 }
