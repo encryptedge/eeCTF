@@ -12,9 +12,9 @@ export const authAdapter = {
             expiresIn: "1d",
         });
     },
-    verify: (token: string) => {
+    verify: (token: string): IJWTPayload => {
         return jwt.verify(token, pubKey, {
             algorithms: ["RS256"],
-        });
+        }) as IJWTPayload;
     },
 };

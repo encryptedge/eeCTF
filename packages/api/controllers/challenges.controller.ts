@@ -48,7 +48,7 @@ export class ChallengeController extends ChallengeService {
             const reqBody = await ctx.req.json();
             const challengeId = ctx.req.param("challengeId");
             const user = ctx.get("user");
-            const userTeamID = await userService.getTeamIDByUserID(user.id);
+            const userTeamID = ctx.get("team_id");
             if(!userTeamID) {
                 throw new Error("User not in team");
             }

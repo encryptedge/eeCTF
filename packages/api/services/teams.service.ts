@@ -210,4 +210,141 @@ export class TeamService {
                 throw new Error(error.message);
         }
     }
+
+    public leaveTeamS = async (reqBody: ITeamLeaveInput) => {
+        try {
+            const { user_id } = reqBody;
+            const query = gql`
+                mutation LeaveTeam($user_id: String!) {
+                    update_users_by_pk(
+                        pk_columns: {
+                            id: $user_id
+                        }, _set: {
+                            team_id: null
+                        }
+                    ) {
+                        id
+                        team {
+                            id
+                        }
+                    }
+                }
+            `;
+
+            const data : Mutation_Root = await client.request(query, {
+                user_id
+            });
+
+            if(data.update_users_by_pk) {
+                return data.update_users_by_pk;
+            }
+
+            else {
+                throw new Error("Unable to leave team");
+            }
+        }
+        catch (error: any) {
+            if(error.response) {
+                throw new Error(error.response.errors[0].message);
+            }
+            else
+                throw new Error(error.message);
+        }
+    }
+
+    public whomaiS = async (team_id: string) => {
+        try {
+            const query = gql`
+                query GetTeam($team_id: String!) {
+                    teams_by_pk(id: $team_id) {
+                        id
+                        name
+                        join_code
+                        users {
+                            id
+                            first_name
+                            last_name
+                            email
+                        }
+
+                        scores {
+                            id
+                            challenge {
+                                id
+                                point
+                                name
+                                machine {
+                                    id
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            `;
+
+            const data : Query_Root = await client.request(query, {
+                team_id
+            });
+
+            if(data.teams_by_pk) {
+                return data.teams_by_pk;
+            }
+            else {
+                throw new Error("Team not found");
+            }
+        }
+        catch (error: any) {
+            if(error.response) {
+                throw new Error(error.response.errors[0].message);
+            }
+            else
+                throw new Error(error.message);
+        }
+    }
+
+    public getTeamMachineProgress = (team_id: string, machine_id: string) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const query = gql`
+                query getTeamMachineProgress($team_id: String!, $machine_id: String!) {
+                    scores(where: {team_id: {_eq: $team_id}, challenge: {machine_id: {_eq: $machine_id}}}) {
+                        id
+                        challenge_id
+                        team_id
+                        user_id
+                        challenge {
+                            id
+                            name
+                            point
+                            machine {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
+                `;
+
+                const data: any = await client.request(query, {
+                    team_id,
+                    machine_id
+                });
+
+                if(data.scores) {
+                    resolve(data.scores);
+                }
+                else {
+                    throw new Error("No data found");
+                }
+            }
+            catch (error: any) {
+                if(error.response) {
+                    reject(error.response.errors[0].message);
+                }
+                else
+                    reject(error.message);
+            }
+        });
+    }
 }

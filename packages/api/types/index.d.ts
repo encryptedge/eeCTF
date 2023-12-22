@@ -27,6 +27,10 @@ interface ITeamCreateInput {
     join_code: string;
 }
 
+interface ITeamLeaveInput {
+    user_id: string;
+}
+
 interface ITeamJoinInput {
     join_code: string;
     user_id: string;
@@ -53,4 +57,11 @@ interface IMachineSubmitFlagInput {
     user_id: string;
     challenge_id: string;
     submited_flag: string;
+}
+
+interface IJWTPayload {
+    id: string;
+    isAdmin: boolean;
+    iat: number;
+    exp: number;
 }

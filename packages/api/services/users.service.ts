@@ -120,6 +120,7 @@ export class UserService {
                     is_admin
                     hash
                     salt
+                    is_email_verified
                 }
             }
             `;
@@ -130,6 +131,13 @@ export class UserService {
 
             if(data.users.length) {
                 const user = data.users[0];
+
+                const isEmailVerified = user.is_email_verified;
+
+                if(!isEmailVerified) {
+                    throw new Error("Email not verified");
+                }
+
                 const hash = crypto
                     .pbkdf2Sync(password, user.salt, 1000, 64, "sha512")
                     .toString("hex");
@@ -152,7 +160,11 @@ export class UserService {
             }
         }
         catch (error: any) {
-            throw new Error(error.response.errors[0].message);
+            if(error.response){
+                throw new Error(error.response.errors[0].message);
+            }
+            else
+                throw new Error(error.message);
         }        
     };
 
@@ -223,7 +235,7 @@ export class UserService {
         }        
     };
 
-    public getTeamIDByUserID = async (userID: string) => {
+    public getTeamIDByUserID = async (userID: string) : Promise<string> => {
         try {
             const query = gql`
             query getTeamIDByUserID($userID: String!) {
@@ -250,6 +262,6 @@ export class UserService {
             }
             else
                 throw new Error(error.message);
-        }        
+        }
     }
 }
