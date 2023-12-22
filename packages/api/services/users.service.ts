@@ -222,4 +222,34 @@ export class UserService {
                 throw new Error(error.message);
         }        
     };
+
+    public getTeamIDByUserID = async (userID: string) => {
+        try {
+            const query = gql`
+            query getTeamIDByUserID($userID: String!) {
+                users_by_pk(id: $userID) {
+                    team_id
+                }
+            }
+            `;
+
+            const data: any = await client.request(query, {
+                userID
+            });
+
+            if(data.users_by_pk) {
+                return data.users_by_pk.team_id;
+            }
+            else {
+                throw new Error("User not found");
+            }
+        }
+        catch (error: any) {
+            if(error.response) {
+                throw new Error(error.response.errors[0].message);
+            }
+            else
+                throw new Error(error.message);
+        }        
+    }
 }

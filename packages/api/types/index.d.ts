@@ -31,3 +31,26 @@ interface ITeamJoinInput {
     join_code: string;
     user_id: string;
 }
+
+interface IChallengeCreateInput {
+    name: string;
+    description: string;
+    flag: string;
+    point: number;
+    stage: number;
+}
+
+interface IMachineCreateInput {
+    name: string;
+    description: string;
+    tags: string;
+    created_by: string;
+    challenges: IChallengeCreateInput[];
+}
+
+interface IMachineSubmitFlagInput {
+    team_id: string;
+    user_id: string;
+    challenge_id: string;
+    submited_flag: string;
+}
