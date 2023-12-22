@@ -1,6 +1,5 @@
 import { Context } from "hono";
 import { TeamService } from "../services/teams.service";
-import { UserService } from "../services/users.service";
 
 export class TeamController extends TeamService {
     public createTeam = async (ctx: Context) => {
