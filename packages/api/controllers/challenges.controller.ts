@@ -2,8 +2,6 @@ import { Context } from "hono";
 import { ChallengeService } from "../services/challenges.service";
 import { UserService } from "../services/users.service";
 
-const userService = new UserService();
-
 export class ChallengeController extends ChallengeService {
     public createMachine = async (ctx: Context) => {
         try {
