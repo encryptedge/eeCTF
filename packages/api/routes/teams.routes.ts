@@ -11,6 +11,6 @@ const controller = new TeamController();
 teamRouter.post("/", auth.authenticate(AUTH_PERMS.AUTHENTICATED), controller.createTeam);
 teamRouter.get("/", auth.authenticate(AUTH_PERMS.AUTHENTICATED), controller.getTeams);
 teamRouter.get("/whoami", auth.authenticate(AUTH_PERMS.TEAM_MEMBER), controller.whoami);
-teamRouter.get("/progess/:machineId", auth.authenticate(AUTH_PERMS.TEAM_MEMBER), controller.getProgress);
+teamRouter.get("/progress", auth.authenticate(AUTH_PERMS.TEAM_MEMBER), controller.getProgress);
 teamRouter.get("/:teamId", auth.authenticate(AUTH_PERMS.AUTHENTICATED), controller.getTeamById);
 teamRouter.post("/join", auth.authenticate(AUTH_PERMS.AUTHENTICATED), controller.joinTeam);

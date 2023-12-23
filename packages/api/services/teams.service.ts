@@ -303,12 +303,28 @@ export class TeamService {
         }
     }
 
-    public getTeamMachineProgress = (team_id: string, machine_id: string) => {
+    public getTeamProgressS = (team_id: string) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const query = gql`
-                query getTeamMachineProgress($team_id: String!, $machine_id: String!) {
-                    scores(where: {team_id: {_eq: $team_id}, challenge: {machine_id: {_eq: $machine_id}}}) {
+                query getTeamProgress($team_id: String!) {
+                    machines {
+                        id
+                        name
+                        description
+                        challenges {
+                            id
+                            name
+                            point
+                            description
+                        }
+                    }
+
+                    scores(where: {
+                        team_id: {
+                            _eq: $team_id
+                        }
+                    }) {
                         id
                         challenge_id
                         team_id
@@ -326,13 +342,59 @@ export class TeamService {
                 }
                 `;
 
-                const data: any = await client.request(query, {
-                    team_id,
-                    machine_id
+                const data: Query_Root = await client.request(query, {
+                    team_id
                 });
 
-                if(data.scores) {
-                    resolve(data.scores);
+                if(data.machines && data.scores) {
+                    const challengeCollection : IParedMachineProgress[] = []
+
+                    for(const machine of data.machines) {
+                        const machineProgress: IParedMachineProgress = {
+                            id: machine.id,
+                            name: machine.name,
+                            description: machine.description,
+                            challenges: []
+                        }
+
+                        for(const challenge of machine.challenges) {
+                            const challengeProgress : IParsedChallengeProgress = {
+                                id: challenge.id,
+                                name: challenge.name,
+                                point: challenge.point,
+                                description: challenge.description,
+                                solved: false
+                            }
+
+                            for(const score of data.scores) {
+                                if(score.challenge_id === challenge.id) {
+                                    challengeProgress.solved = true;
+                                    break;
+                                }
+                            }
+
+                            machineProgress.challenges?.push(challengeProgress);
+                        }
+
+                        challengeCollection.push(machineProgress);
+                    }
+                    
+                    for (const machine of challengeCollection) {
+                        const solvedChallenges = machine.challenges?.filter(challenge => challenge.solved);
+                        const unsolvedChallenges = machine.challenges?.filter(challenge => !challenge.solved);
+
+                        if(solvedChallenges?.length) {
+                            machine.challenges = solvedChallenges;
+                            if(unsolvedChallenges?.length) {
+                                machine.challenges.push(unsolvedChallenges[0]);
+                            }
+                        }
+                        else {
+                            machine.challenges = [machine.challenges![0]];
+                        }
+                    }
+
+                    resolve(challengeCollection);
                 }
                 else {
                     throw new Error("No data found");
