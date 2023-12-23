@@ -65,3 +65,18 @@ interface IJWTPayload {
     iat: number;
     exp: number;
 }
+
+interface IParedMachineProgress {
+    id: string;
+    name: string;
+    description: string;
+    challenges?: IParsedChallengeProgress[];
+}
+
+interface IParsedChallengeProgress {
+    id: string;
+    name: string;
+    point: number;
+    description: string;
+    solved: boolean;
+}

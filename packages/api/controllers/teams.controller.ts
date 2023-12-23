@@ -75,11 +75,7 @@ export class TeamController extends TeamService {
     public getProgress = async (ctx: Context) => {
         try {
             const userTeamID = await ctx.get("team_id");
-            const mechineID = ctx.req.param("machineId");
-            const data = await this.getTeamMachineProgress(
-                userTeamID,
-                mechineID
-            );
+            const data = await this.getTeamProgressS(userTeamID);
             return ctx.json(data);
         }
         catch (error: any) {
