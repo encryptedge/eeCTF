@@ -40,6 +40,19 @@ export class ChallengeController extends ChallengeService {
         }
     }
 
+    public getProgress = async (ctx: Context) => {
+        try {
+            const userTeamID = await ctx.get("team_id");
+            const data = await this.getTeamProgressS(userTeamID);
+            return ctx.json(data);
+        }
+        catch (error: any) {
+            return ctx.json({
+                error: error.message
+            });
+        }
+    }
+
     public sumbitFlag = async (ctx: Context) => {
         try {
             const reqBody = await ctx.req.json();
