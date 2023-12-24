@@ -27,6 +27,12 @@ interface ITeamCreateInput {
     join_code: string;
 }
 
+interface ITeamEditInput {
+    id: string;
+    team_name: string;
+    join_code: string;
+}
+
 interface ITeamLeaveInput {
     user_id: string;
 }
@@ -79,4 +85,27 @@ interface IParsedChallengeProgress {
     point: number;
     description: string;
     solved: boolean;
+}
+
+interface IStatSubmissions {
+    id: string;
+    challenge_id: string
+    challenge_name: string;
+    machine_id: string
+    machine_name: string;
+    submited_flag: string;
+}
+
+interface IStatsLeaderboard {
+    rank: number;
+    team_id: string;
+    team_name: string;
+    score: number;
+}
+
+interface ITeamStats {
+    team_id: string;
+    team_name: string;
+    score: number;
+    submissions: IStatSubmissions[];
 }

@@ -11,4 +11,6 @@ const challengeController = new ChallengeController();
 challengeRouter.post("/manage/machine", authMiddleware.authenticate(AUTH_PERMS.ADMIN), challengeController.createMachine);
 challengeRouter.get("/manage/machine/:machineId", authMiddleware.authenticate(AUTH_PERMS.ADMIN), challengeController.getMachineById);
 challengeRouter.get("/manage/machines", authMiddleware.authenticate(AUTH_PERMS.ADMIN), challengeController.getMachines);
+
+challengeRouter.get("/progress", authMiddleware.authenticate(AUTH_PERMS.TEAM_MEMBER), challengeController.getProgress);
 challengeRouter.put("/submit/:challengeId", authMiddleware.authenticate(AUTH_PERMS.TEAM_MEMBER), challengeController.sumbitFlag);
