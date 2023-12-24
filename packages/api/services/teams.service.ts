@@ -146,6 +146,51 @@ export class TeamService {
         }
     }
 
+    public EditTeamInfo = async (teamData: ITeamEditInput) => {
+        try {
+            const { id, team_name, join_code } = teamData;
+            if(!id || !team_name || !join_code) {
+                throw new Error("Invalid request");
+            }
+            const query = gql`
+                mutation EditTeam($id: String!, $team_name: String!, $join_code: String!) {
+                    update_teams_by_pk(
+                        pk_columns: {
+                            id: $id
+                        }, _set: {
+                            name: $team_name,
+                            join_code: $join_code
+                        }
+                    ) {
+                        id
+                        name
+                        join_code
+                    }
+                }
+            `;
+
+            const data : Mutation_Root = await client.request(query, {
+                id,
+                team_name,
+                join_code
+            });
+
+            if(data.update_teams_by_pk) {
+                return data.update_teams_by_pk;
+            }
+            else {
+                throw new Error("Unable to edit team");
+            }
+        }
+        catch (error: any) {
+            if(error.response) {
+                throw new Error(error.response.errors[0].message);
+            }
+            else
+                throw new Error(error.message);
+        }
+    }
+
     public joinTeamS = async (reqBody: ITeamJoinInput) => {
         try {
             const { user_id, join_code } = reqBody;
@@ -153,6 +198,11 @@ export class TeamService {
                 query GetTeam($join_code: String!) {
                     teams(where: {join_code: {_eq: $join_code}}) {
                         id
+                        users_aggregate {
+                            aggregate {
+                                count
+                            }
+                        }
                     }
                 }
             `;
@@ -162,6 +212,9 @@ export class TeamService {
             });
 
             if(team_join.teams.length) {
+                if(team_join.teams[0].users_aggregate.aggregate?.count === 4) {
+                    throw new Error("Team is full");
+                }
                 const team_id = team_join.teams[0].id;
                 const query = gql`
                     mutation JoinTeam($user_id: String!, $team_id: String!) {
@@ -301,112 +354,5 @@ export class TeamService {
             else
                 throw new Error(error.message);
         }
-    }
-
-    public getTeamProgressS = (team_id: string) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const query = gql`
-                query getTeamProgress($team_id: String!) {
-                    machines {
-                        id
-                        name
-                        description
-                        challenges {
-                            id
-                            name
-                            point
-                            description
-                        }
-                    }
-
-                    scores(where: {
-                        team_id: {
-                            _eq: $team_id
-                        }
-                    }) {
-                        id
-                        challenge_id
-                        team_id
-                        user_id
-                        challenge {
-                            id
-                            name
-                            point
-                            machine {
-                                id
-                                name
-                            }
-                        }
-                    }
-                }
-                `;
-
-                const data: Query_Root = await client.request(query, {
-                    team_id
-                });
-
-                if(data.machines && data.scores) {
-                    const challengeCollection : IParedMachineProgress[] = []
-
-                    for(const machine of data.machines) {
-                        const machineProgress: IParedMachineProgress = {
-                            id: machine.id,
-                            name: machine.name,
-                            description: machine.description,
-                            challenges: []
-                        }
-
-                        for(const challenge of machine.challenges) {
-                            const challengeProgress : IParsedChallengeProgress = {
-                                id: challenge.id,
-                                name: challenge.name,
-                                point: challenge.point,
-                                description: challenge.description,
-                                solved: false
-                            }
-
-                            for(const score of data.scores) {
-                                if(score.challenge_id === challenge.id) {
-                                    challengeProgress.solved = true;
-                                    break;
-                                }
-                            }
-
-                            machineProgress.challenges?.push(challengeProgress);
-                        }
-
-                        challengeCollection.push(machineProgress);
-                    }
-                    
-                    for (const machine of challengeCollection) {
-                        const solvedChallenges = machine.challenges?.filter(challenge => challenge.solved);
-                        const unsolvedChallenges = machine.challenges?.filter(challenge => !challenge.solved);
-
-                        if(solvedChallenges?.length) {
-                            machine.challenges = solvedChallenges;
-                            if(unsolvedChallenges?.length) {
-                                machine.challenges.push(unsolvedChallenges[0]);
-                            }
-                        }
-                        else {
-                            machine.challenges = [machine.challenges![0]];
-                        }
-                    }
-
-                    resolve(challengeCollection);
-                }
-                else {
-                    throw new Error("No data found");
-                }
-            }
-            catch (error: any) {
-                if(error.response) {
-                    reject(error.response.errors[0].message);
-                }
-                else
-                    reject(error.message);
-            }
-        });
     }
 }

@@ -72,10 +72,30 @@ export class TeamController extends TeamService {
         }
     }
 
-    public getProgress = async (ctx: Context) => {
+    public leaveTeam = async (ctx: Context) => {
+        try {
+            const user = ctx.get("user");
+            const data = await this.leaveTeamS({
+                user_id: user.id
+            });
+            return ctx.json(data);
+        }
+        catch (error: any) {
+            return ctx.json({
+                error: error.message
+            });
+        }
+    }
+
+    public editTeam = async (ctx: Context) => {
         try {
             const userTeamID = await ctx.get("team_id");
-            const data = await this.getTeamProgressS(userTeamID);
+            const reqBody = await ctx.req.json();
+            const data = await this.EditTeamInfo({
+                id: userTeamID,
+                team_name: reqBody.team_name,
+                join_code: reqBody.join_code
+            });
             return ctx.json(data);
         }
         catch (error: any) {
