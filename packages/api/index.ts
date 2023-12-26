@@ -2,13 +2,13 @@ import "dotenv/config";
 
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { cors } from "hono/cors";
 import { compress } from "hono/compress";
+import { cors } from "hono/cors";
+import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
-import { showRoutes } from "hono/dev"
 import { poweredBy } from "hono/powered-by";
-import { secureHeaders } from "hono/secure-headers";
 import { prettyJSON } from "hono/pretty-json";
+import { secureHeaders } from "hono/secure-headers";
 
 import "./config/env";
 
@@ -19,23 +19,23 @@ const app = new Hono();
 
 hgqlInit();
 
-app.use('*', logger())
-app.use('*', poweredBy())
-app.use('*', secureHeaders())
-app.use('*', compress({
+app.use("*", logger());
+app.use("*", poweredBy());
+app.use("*", secureHeaders());
+app.use("*", compress({
     encoding: "gzip",
-}))
-app.use('*', cors({
+}));
+app.use("*", cors({
     origin: "*",
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-}))
-app.use('*', prettyJSON(
+}));
+app.use("*", prettyJSON(
     {
         space: 4,
     }
-))
+));
 
 app.route("/", routes);
 

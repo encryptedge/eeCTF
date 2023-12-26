@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 
-import { AuthMiddleware } from "../middlewares/auth.middleware";
 import { ChallengeController } from "../controllers/challenges.controller";
 import { AUTH_PERMS } from "../extras/permissions";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 export const challengeRouter = new Hono();
 const authMiddleware = new AuthMiddleware();

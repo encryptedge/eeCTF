@@ -1,4 +1,5 @@
 import { Context } from "hono";
+
 import { ChallengeService } from "../services/challenges.service";
 
 export class ChallengeController extends ChallengeService {
@@ -38,7 +39,7 @@ export class ChallengeController extends ChallengeService {
                 error: error.message
             });
         }
-    }
+    };
 
     public getProgress = async (ctx: Context) => {
         try {
@@ -51,7 +52,7 @@ export class ChallengeController extends ChallengeService {
                 error: error.message
             });
         }
-    }
+    };
 
     public sumbitFlag = async (ctx: Context) => {
         try {
@@ -71,15 +72,11 @@ export class ChallengeController extends ChallengeService {
             return ctx.json(data);
         }
         catch (error: any) {
-            if(error.response) {
-                return ctx.json({
+            return error.response ? ctx.json({
                     error: error.response.errors[0].message
-                });
-            }
-            else
-                return ctx.json({
+                }) : ctx.json({
                     error: error.message
                 });
         }
-    }
+    };
 }

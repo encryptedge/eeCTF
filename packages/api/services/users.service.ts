@@ -4,10 +4,10 @@ import { gql } from "graphql-request";
 import { SnowflakeId } from "hyperflake";
 
 import { Mutation_Root, Users_Insert_Input } from "../graphql/types";
+import { authAdapter } from "../helpers/authAdapter";
 import { client } from "../helpers/gqlClient";
 import sendmail from "../helpers/mailer";
 import { genOTP } from "../libs";
-import { authAdapter } from "../helpers/authAdapter";
 
 export class UserService {
     public registerUserS = async (userRegisterInput: IUserRegisterInput) => {
@@ -23,15 +23,15 @@ export class UserService {
                     .pbkdf2Sync(password, salt, 1000, 64, "sha512")
                     .toString("hex");
             const query = gql`
-            mutation registerUser($variables: users_insert_input!) {
-                insert_users_one(object: $variables) {
-                    id
-                    first_name
-                    last_name
-                    email
-                    is_admin
-                }
-            }
+              mutation registerUser($variables: users_insert_input!) {
+                  insert_users_one(object: $variables) {
+                      id
+                      first_name
+                      last_name
+                      email
+                      is_admin
+                  }
+              }
             `;
 
             const variables: Users_Insert_Input = {
@@ -68,12 +68,7 @@ export class UserService {
         }
         catch (error: any) {
             let errMsg : string = error.response.errors[0].message;
-            if(errMsg.includes("duplicate")) {
-                errMsg = "Email already exists";
-            }
-            else {
-                errMsg = "Something went wrong";
-            }
+            errMsg = errMsg.includes("duplicate") ? "Email already exists" : "Something went wrong";
             throw new Error(errMsg);
         }
     };
@@ -82,11 +77,11 @@ export class UserService {
         try {
             const { otp } = userVerifyInput;
             const query = gql`
-            mutation verifyUser($otp: String!) {
-                update_users(where: {email_verification_code: {_eq: $otp}}, _set: {is_email_verified: true}) {
-                    affected_rows
-                }
-            }
+              mutation verifyUser($otp: String!) {
+                  update_users(where: {email_verification_code: {_eq: $otp}}, _set: {is_email_verified: true}) {
+                      affected_rows
+                  }
+              }
             `;
 
             const data: Mutation_Root = await client.request(query, {
@@ -111,25 +106,25 @@ export class UserService {
         try {
             const { email, password } = userLoginInput;
             const query = gql`
-            query loginUser($email: String!) {
-                users(where: {email: {_eq: $email}}) {
-                    id
-                    first_name
-                    last_name
-                    email
-                    is_admin
-                    hash
-                    salt
-                    is_email_verified
-                }
-            }
+              query loginUser($email: String!) {
+                  users(where: {email: {_eq: $email}}) {
+                      id
+                      first_name
+                      last_name
+                      email
+                      is_admin
+                      hash
+                      salt
+                      is_email_verified
+                  }
+              }
             `;
 
             const data: any = await client.request(query, {
                 email
             });
 
-            if(data.users.length) {
+            if(data.users.length > 0) {
                 const user = data.users[0];
 
                 const isEmailVerified = user.is_email_verified;
@@ -160,11 +155,7 @@ export class UserService {
             }
         }
         catch (error: any) {
-            if(error.response){
-                throw new Error(error.response.errors[0].message);
-            }
-            else
-                throw new Error(error.message);
+            throw error.response ? new Error(error.response.errors[0].message) : new Error(error.message);
         }        
     };
 
@@ -172,47 +163,47 @@ export class UserService {
         try {
             const user = ctx.get("user");
             const query = gql`
-            query whoami($id: String!) {
-                users_by_pk(id: $id) {
-                    id
-                    first_name
-                    last_name
-                    email
-                    is_admin
+              query whoami($id: String!) {
+                  users_by_pk(id: $id) {
+                      id
+                      first_name
+                      last_name
+                      email
+                      is_admin
 
-                    team {
-                        id
-                        name
-                    }
+                      team {
+                          id
+                          name
+                      }
 
-                    scores {
-                        id
-                        challenge {
-                            id
-                            point
-                            name
-                            machine {
-                                id
-                                name
-                            }
-                        }
-                    }
+                      scores {
+                          id
+                          challenge {
+                              id
+                              point
+                              name
+                              machine {
+                                  id
+                                  name
+                              }
+                          }
+                      }
 
-                    submissions {
-                        id
-                        submited_flag
-                        challenge {
-                            id
-                            point
-                            name
-                            machine {
-                                id
-                                name
-                            }
-                        }
-                    }
-                }
-            }
+                      submissions {
+                          id
+                          submited_flag
+                          challenge {
+                              id
+                              point
+                              name
+                              machine {
+                                  id
+                                  name
+                              }
+                          }
+                      }
+                  }
+              }
             `;
 
             const data: any = await client.request(query, {
@@ -227,22 +218,18 @@ export class UserService {
             }
         }
         catch (error: any) {
-            if(error.response) {
-                throw new Error(error.response.errors[0].message);
-            }
-            else
-                throw new Error(error.message);
+            throw error.response ? new Error(error.response.errors[0].message) : new Error(error.message);
         }        
     };
 
     public getTeamIDByUserID = async (userID: string) : Promise<string> => {
         try {
             const query = gql`
-            query getTeamIDByUserID($userID: String!) {
-                users_by_pk(id: $userID) {
-                    team_id
-                }
-            }
+              query getTeamIDByUserID($userID: String!) {
+                  users_by_pk(id: $userID) {
+                      team_id
+                  }
+              }
             `;
 
             const data: any = await client.request(query, {
@@ -257,11 +244,7 @@ export class UserService {
             }
         }
         catch (error: any) {
-            if(error.response) {
-                throw new Error(error.response.errors[0].message);
-            }
-            else
-                throw new Error(error.message);
+            throw error.response ? new Error(error.response.errors[0].message) : new Error(error.message);
         }
-    }
+    };
 }

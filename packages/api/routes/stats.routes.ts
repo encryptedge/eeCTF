@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 
-import { AuthMiddleware } from "../middlewares/auth.middleware";
-import { AUTH_PERMS } from "../extras/permissions";
 import { StatsControtoller } from "../controllers/stats.controller";
+import { AUTH_PERMS } from "../extras/permissions";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 export const statsRouter = new Hono();
 

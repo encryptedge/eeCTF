@@ -1,4 +1,5 @@
 import { Context } from "hono";
+
 import { TeamService } from "../services/teams.service";
 
 export class TeamController extends TeamService {
@@ -43,7 +44,7 @@ export class TeamController extends TeamService {
                 error: error.message
             });
         }
-    }
+    };
 
 
 
@@ -57,7 +58,7 @@ export class TeamController extends TeamService {
                 error: error.message
             });
         }
-    }
+    };
 
     public whoami = async (ctx: Context) => {
         try {
@@ -70,7 +71,7 @@ export class TeamController extends TeamService {
                 error: error.message
             });
         }
-    }
+    };
 
     public leaveTeam = async (ctx: Context) => {
         try {
@@ -85,7 +86,7 @@ export class TeamController extends TeamService {
                 error: error.message
             });
         }
-    }
+    };
 
     public editTeam = async (ctx: Context) => {
         try {
@@ -103,5 +104,5 @@ export class TeamController extends TeamService {
                 error: error.message
             });
         }
-    }
+    };
 }

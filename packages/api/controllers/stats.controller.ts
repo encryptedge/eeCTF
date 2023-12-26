@@ -26,5 +26,5 @@ export class StatsControtoller extends StatsService {
                 error: error.message
             });
         }
-    }
+    };
 }

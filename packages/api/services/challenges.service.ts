@@ -1,6 +1,7 @@
-import { SnowflakeId } from "hyperflake";
-import { Challenges_Insert_Input, Machines_Insert_Input, Mutation_Root, Query_Root } from "../graphql/types";
 import { gql } from "graphql-request";
+import { SnowflakeId } from "hyperflake";
+
+import { Challenges_Insert_Input, Machines_Insert_Input, Mutation_Root, Query_Root } from "../graphql/types";
 import { client } from "../helpers/gqlClient";
 
 const snowflake = SnowflakeId();
@@ -20,17 +21,17 @@ export class ChallengeService {
                 description,
                 created_by,
                 tags,
-            }
+            };
 
             const query = gql`
-                mutation createMachine($machineInput: machines_insert_input!) {
-                    insert_machines_one(object: $machineInput) {
-                        id
-                        name
-                        description
-                        tags
-                    }
-                }
+              mutation createMachine($machineInput: machines_insert_input!) {
+                  insert_machines_one(object: $machineInput) {
+                      id
+                      name
+                      description
+                      tags
+                  }
+              }
             `;
 
             const { insert_machines_one } : Mutation_Root = await client.request(query, {
@@ -41,7 +42,7 @@ export class ChallengeService {
                 throw new Error("Failed to create machine");
             }
 
-            let challengeInput : Challenges_Insert_Input[] = [];
+            const challengeInput : Challenges_Insert_Input[] = [];
             
             for (const element of challenges) {
                 const id = snowflake.generate();
@@ -57,23 +58,22 @@ export class ChallengeService {
                     flag,
                     point,
                     stage,
-                })
-                setTimeout(() => { }, 100000);
-            };
+                });
+            }
 
             const query2 = gql`
-                mutation createChallenge($challengeInput: [challenges_insert_input!]!) {
-                    insert_challenges(objects: $challengeInput) {
-                        returning {
-                            id
-                            name
-                            description
-                            flag
-                            point
-                            stage
-                        }
-                    }
-                }
+              mutation createChallenge($challengeInput: [challenges_insert_input!]!) {
+                  insert_challenges(objects: $challengeInput) {
+                      returning {
+                          id
+                          name
+                          description
+                          flag
+                          point
+                          stage
+                      }
+                  }
+              }
             `;
 
             const { insert_challenges } : Mutation_Root = await client.request(query2, {
@@ -82,39 +82,39 @@ export class ChallengeService {
 
             if(!insert_challenges){
                 throw new Error("Failed to create challenges");
-            } else if(insert_challenges.returning.length !== challengeInput.length){
-                throw new Error("Failed to create all challenges");
-            } else {
+            } else if(insert_challenges.returning.length === challengeInput.length){
                 return {
                     machine: insert_machines_one,
                     challenges: insert_challenges.returning,
-                }
+                };
+            } else {
+                throw new Error("Failed to create all challenges");
             }
         }
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
     
     public getMachineByIdS = async (machineId: string) => {
         try {
             const query = gql`
-                query getMachineById($machineId: String!) {
-                    machines_by_pk(id: $machineId) {
-                        id
-                        name
-                        description
-                        tags
-                        challenges {
-                            id
-                            name
-                            description
-                            flag
-                            point
-                            stage
-                        }
-                    }
-                }
+              query getMachineById($machineId: String!) {
+                  machines_by_pk(id: $machineId) {
+                      id
+                      name
+                      description
+                      tags
+                      challenges {
+                          id
+                          name
+                          description
+                          flag
+                          point
+                          stage
+                      }
+                  }
+              }
             `;
 
             const { machines_by_pk } : Query_Root = await client.request(query, {
@@ -130,27 +130,27 @@ export class ChallengeService {
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
 
     public getMachinesS = async () => {
         try {
             const query = gql`
-                query getMachines {
-                    machines {
-                        id
-                        name
-                        description
-                        tags
-                        challenges {
-                            id
-                            name
-                            description
-                            flag
-                            point
-                            stage
-                        }
-                    }
-                }
+              query getMachines {
+                  machines {
+                      id
+                      name
+                      description
+                      tags
+                      challenges {
+                          id
+                          name
+                          description
+                          flag
+                          point
+                          stage
+                      }
+                  }
+              }
             `;
 
             const { machines } : Query_Root = await client.request(query);
@@ -160,7 +160,7 @@ export class ChallengeService {
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
 
     public submitFlagS = async (reqBody: IMachineSubmitFlagInput) => {
         try {
@@ -171,11 +171,11 @@ export class ChallengeService {
             }
 
             const queryPreCheck = gql`
-                query checkScore($challenge_id: String!, $team_id: String!) {
-                    scores(where: {challenge_id: {_eq: $challenge_id}, team_id: { _eq: $team_id }}) {
-                        id
-                    }
-                }
+              query checkScore($challenge_id: String!, $team_id: String!) {
+                  scores(where: {challenge_id: {_eq: $challenge_id}, team_id: { _eq: $team_id }}) {
+                      id
+                  }
+              }
             `;
 
             const { scores } : Query_Root = await client.request(queryPreCheck, {
@@ -188,13 +188,13 @@ export class ChallengeService {
             }
 
             const query = gql`
-                query getChallengeById($challenge_id: String!) {
-                    challenges_by_pk(id: $challenge_id) {
-                        id
-                        flag
-                        point
-                    }
-                }
+              query getChallengeById($challenge_id: String!) {
+                  challenges_by_pk(id: $challenge_id) {
+                      id
+                      flag
+                      point
+                  }
+              }
             `;
 
             const { challenges_by_pk } : Query_Root = await client.request(query, {
@@ -206,13 +206,13 @@ export class ChallengeService {
             }
 
             const query2 = gql`
-                mutation createSubmission($submission_id: String!, $challenge_id: String!, $submited_flag: String!, $user_id: String!) {
-                    insert_submissions_one(object: { challenge_id: $challenge_id, submited_flag: $submited_flag, id: $submission_id, user_id: $user_id}) {
-                        id
-                        challenge_id
-                        submited_flag
-                    }
-                }
+              mutation createSubmission($submission_id: String!, $challenge_id: String!, $submited_flag: String!, $user_id: String!) {
+                  insert_submissions_one(object: { challenge_id: $challenge_id, submited_flag: $submited_flag, id: $submission_id, user_id: $user_id}) {
+                      id
+                      challenge_id
+                      submited_flag
+                  }
+              }
             `;
 
             const { insert_submissions_one } : Mutation_Root = await client.request(query2, {
@@ -231,13 +231,13 @@ export class ChallengeService {
             }
 
             const query3 = gql`
-                mutation createScore($score_id: String!, $team_id: String!, $user_id: String!, $submission_id: String!, $challenge_id: String!) {
-                    insert_scores_one(object: { team_id: $team_id, user_id: $user_id, id: $score_id, submission_id: $submission_id, challenge_id: $challenge_id}) {
-                        id
-                        team_id
-                        user_id
-                    }
-                }
+              mutation createScore($score_id: String!, $team_id: String!, $user_id: String!, $submission_id: String!, $challenge_id: String!) {
+                  insert_scores_one(object: { team_id: $team_id, user_id: $user_id, id: $score_id, submission_id: $submission_id, challenge_id: $challenge_id}) {
+                      id
+                      team_id
+                      user_id
+                  }
+              }
             `;
 
             const { insert_scores_one } : Mutation_Root = await client.request(query3, {
@@ -254,54 +254,51 @@ export class ChallengeService {
 
             return {
                 message: "GG!"
-            }
+            };
         }
         catch (error: any) {
-            if(error.response) {
-                throw new Error(error.response.errors[0].message);
-            }
-            else
-                throw new Error(error.message);
+            throw error.response ? new Error(error.response.errors[0].message) : new Error(error.message);
         }
-    }
+    };
 
     public getTeamProgressS = (team_id: string) => {
+        // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             try {
                 const query = gql`
-                query getTeamProgress($team_id: String!) {
-                    machines {
-                        id
-                        name
-                        description
-                        challenges {
-                            id
-                            name
-                            point
-                            description
-                        }
-                    }
+                  query getTeamProgress($team_id: String!) {
+                      machines {
+                          id
+                          name
+                          description
+                          challenges {
+                              id
+                              name
+                              point
+                              description
+                          }
+                      }
 
-                    scores(where: {
-                        team_id: {
-                            _eq: $team_id
-                        }
-                    }) {
-                        id
-                        challenge_id
-                        team_id
-                        user_id
-                        challenge {
-                            id
-                            name
-                            point
-                            machine {
-                                id
-                                name
-                            }
-                        }
-                    }
-                }
+                      scores(where: {
+                          team_id: {
+                              _eq: $team_id
+                          }
+                      }) {
+                          id
+                          challenge_id
+                          team_id
+                          user_id
+                          challenge {
+                              id
+                              name
+                              point
+                              machine {
+                                  id
+                                  name
+                              }
+                          }
+                      }
+                  }
                 `;
 
                 const data: Query_Root = await client.request(query, {
@@ -309,7 +306,7 @@ export class ChallengeService {
                 });
 
                 if(data.machines && data.scores) {
-                    const challengeCollection : IParedMachineProgress[] = []
+                    const challengeCollection : IParedMachineProgress[] = [];
 
                     for(const machine of data.machines) {
                         const machineProgress: IParedMachineProgress = {
@@ -317,7 +314,7 @@ export class ChallengeService {
                             name: machine.name,
                             description: machine.description,
                             challenges: []
-                        }
+                        };
 
                         for(const challenge of machine.challenges) {
                             const challengeProgress : IParsedChallengeProgress = {
@@ -326,7 +323,7 @@ export class ChallengeService {
                                 point: challenge.point,
                                 description: challenge.description,
                                 solved: false
-                            }
+                            };
 
                             for(const score of data.scores) {
                                 if(score.challenge_id === challenge.id) {
@@ -370,5 +367,5 @@ export class ChallengeService {
                     reject(error.message);
             }
         });
-    }
+    };
 }

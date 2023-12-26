@@ -1,6 +1,7 @@
 import { Context, Next } from "hono";
-import { authAdapter } from "../helpers/authAdapter";
+
 import { AUTH_PERMS } from "../extras/permissions";
+import { authAdapter } from "../helpers/authAdapter";
 import { UserService } from "../services/users.service";
 
 const userService = new UserService();

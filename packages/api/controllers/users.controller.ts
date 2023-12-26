@@ -52,5 +52,5 @@ export class UserController extends UserService {
                 error: error.message
             });
         }
-    }
+    };
 }

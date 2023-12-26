@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 
 import { UserController } from "../controllers/users.controller";
-import { AuthMiddleware } from "../middlewares/auth.middleware";
 import { AUTH_PERMS } from "../extras/permissions";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 export const userRoutes = new Hono();
 const userContoller = new UserController();

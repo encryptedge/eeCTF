@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 
-import { AuthMiddleware } from "../middlewares/auth.middleware";
 import { TeamController } from "../controllers/teams.controller";
 import { AUTH_PERMS } from "../extras/permissions";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 export const teamRouter = new Hono();
 const authMiddleware = new AuthMiddleware();

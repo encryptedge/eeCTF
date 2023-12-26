@@ -1,33 +1,33 @@
-import { gql } from 'graphql-request';
+import { gql } from "graphql-request";
 
-import { client } from '../helpers/gqlClient';
-import { Query_Root } from '../graphql/types';
+import { Query_Root } from "../graphql/types";
+import { client } from "../helpers/gqlClient";
 
 export class StatsService {
     public getTeamScoreS = async (teamId: string) => {
         try {
             const query = gql`
-                query getTeamScore($teamId: String!) {
-                    scores(where: {team_id: {_eq: $teamId}}) {
-                        id
-                        challenge {
-                            id
-                            name
-                            machine {
-                                id
-                                name
-                            }
-                            point
-                        }
-                        team {
-                            name
-                        }
-                        submission {
-                            id
-                            submited_flag
-                        }
-                    }
-                }
+              query getTeamScore($teamId: String!) {
+                  scores(where: {team_id: {_eq: $teamId}}) {
+                      id
+                      challenge {
+                          id
+                          name
+                          machine {
+                              id
+                              name
+                          }
+                          point
+                      }
+                      team {
+                          name
+                      }
+                      submission {
+                          id
+                          submited_flag
+                      }
+                  }
+              }
             `;
 
             const { scores } : Query_Root = await client.request(query, {
@@ -43,7 +43,7 @@ export class StatsService {
                 team_name: scores[0].team.name,
                 score: 0,
                 submissions: [],
-            }
+            };
 
             for (const score of scores) {
                 teamScore.score += score.challenge.point;
@@ -54,7 +54,7 @@ export class StatsService {
                     machine_name: score.challenge.machine.name,
                     submited_flag: score.submission.submited_flag,
                     id: score.submission.id,
-                })
+                });
             }
 
             return teamScore;
@@ -62,24 +62,24 @@ export class StatsService {
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
 
     public getAllTeamScoreS = async () => {
         try {
             const query = gql`
-                query getAllTeamScore {
-                    scores {
-                        id
-                        team {
-                            id
-                            name
-                        }
-                        challenge {
-                            id
-                            point
-                        }
-                    }
-                }
+              query getAllTeamScore {
+                  scores {
+                      id
+                      team {
+                          id
+                          name
+                      }
+                      challenge {
+                          id
+                          point
+                      }
+                  }
+              }
             `;
 
             const { scores } : Query_Root = await client.request(query);
@@ -98,7 +98,7 @@ export class StatsService {
                         team_name: score.team.name,
                         score: score.challenge.point,
                         rank: 0,
-                    })
+                    });
                 }
                 else {
                     teamsLeaderboard[teamIndex].score += score.challenge.point;
@@ -106,14 +106,14 @@ export class StatsService {
             }
 
             teamsLeaderboard.sort((a, b) => b.score - a.score);
-            teamsLeaderboard.forEach((team, index) => {
+            for (const [index, team] of teamsLeaderboard.entries()) {
                 team.rank = index + 1;
-            })
+            }
 
             return teamsLeaderboard;
         }
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
 }
