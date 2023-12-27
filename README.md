@@ -2,7 +2,7 @@
 
 ## Postman Docs
 
-[![View Postman Docs](./static/postman.svg)](https://app.getpostman.com/run-collection/0c9b9b9b9b9b9b9b9b9b)
+[![View Postman Docs](./static/postman.svg)](https://documenter.getpostman.com/view/23153445/2s9YkrcLdz)
 
 ## Setup
 
