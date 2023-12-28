@@ -82,6 +82,7 @@ function Home() {
                 </div>
                 <div className="form-el-container">
                     <input
+                    className='forminput'
                         type="text"
                         id="email"
                         value={email}
@@ -96,6 +97,7 @@ function Home() {
                 </div>
                 <div className="form-el-container">
                 <input
+                className='forminput'
                     type="password"
                     id="password"
                     value={password}
