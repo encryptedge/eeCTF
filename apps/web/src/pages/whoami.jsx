@@ -46,19 +46,20 @@ function WhoAmI() {
             <div>
                 <img src="/ee.png" className="logo react" alt="ee logo" />
             </div>
-            <h1>WhoAmI?</h1>
+            <h1>Who Am I ?</h1>
+            <div className='who-card'>
             <div className="user-wrapper">
-                <h2>$User</h2>
+                <h2>$ User</h2>
                 ID: <span className="user-id">{userWhoami?.id}</span><br />
                 Name: <span className="user-name">{userWhoami?.first_name} {userWhoami?.last_name}</span><br />
             </div>
             <div className="team-wrapper">
-                <h2>$Team</h2>
+                <h2>$ Team</h2>
                 ID: <span className="team-id">{teamWhoami?.id}</span><br />
                 Name: <span className="team-name">{teamWhoami?.name}</span><br />
             </div>
             <div className="stats-wrapper">
-                <h2>$Stats</h2>
+                <h2>$ Stats</h2>
                 <table>
                     <thead>
                         <tr>
@@ -77,6 +78,7 @@ function WhoAmI() {
                         ))}
                     </tbody>
                 </table>
+        </div>
             </div>
         </>
     )
