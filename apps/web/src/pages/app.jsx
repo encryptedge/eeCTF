@@ -21,6 +21,7 @@ function Player() {
                 "Authorization": "Bearer " + token,
             }
         }).then(res => {
+            if(!Array.isArray(res.data)) return window.location.href = '/login'
             if(res.data.message === 'Invalid token') return window.location.href = '/login';
             setMachines(res.data);
         })
