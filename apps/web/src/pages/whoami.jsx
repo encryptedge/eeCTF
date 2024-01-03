@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import apiClient from "../libs/api.client";
 import Navbar from "../components/navbar";
 
+import "../styles/whoami.styles.css";
+
 function WhoAmI() {
   const [userWhoami, setUserWhoami] = useState(null);
   const [teamWhoami, setTeamWhoami] = useState(null);
@@ -60,22 +62,24 @@ function WhoAmI() {
     <>
       <Navbar pageTitle={"Who am I?"} />
       <div className='who-card'>
-        <div className='user-wrapper'>
-          <h2>$ User</h2>
-          ID: <span className='user-id'>{userWhoami?.id}</span>
-          <br />
-          Name:{" "}
-          <span className='user-name'>
-            {userWhoami?.first_name} {userWhoami?.last_name}
-          </span>
-          <br />
-        </div>
-        <div className='team-wrapper'>
-          <h2>$ Team</h2>
-          ID: <span className='team-id'>{teamWhoami?.id}</span>
-          <br />
-          Name: <span className='team-name'>{teamWhoami?.name}</span>
-          <br />
+        <div className='who-wrapper'>
+          <div className='user-wrapper'>
+            <h2>$ User</h2>
+            ID: <span className='user-id'>{userWhoami?.id}</span>
+            <br />
+            Name:{" "}
+            <span className='user-name'>
+              {userWhoami?.first_name} {userWhoami?.last_name}
+            </span>
+            <br />
+          </div>
+          <div className='team-wrapper'>
+            <h2>$ Team</h2>
+            ID: <span className='team-id'>{teamWhoami?.id}</span>
+            <br />
+            Name: <span className='team-name'>{teamWhoami?.name}</span>
+            <br />
+          </div>
         </div>
         <div className='stats-wrapper'>
           <h2>$ Stats</h2>
