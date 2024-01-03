@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import apiClient from '../libs/api.client';
 import { ToastContainer, toast } from 'react-toastify';
 
 import '../App.css'
@@ -10,21 +10,14 @@ function Home() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        let data = JSON.stringify({
-            "otp": otp,
-        });
         
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: import.meta.env.VITE_API_URL + '/user/verify',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            data : data
-        };
-        
-        axios.request(config)
+        apiClient.post("/user/verify", {
+            otp
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
             .then((response) => {
                 if (response.data.message === 'User verified successfully') {
                     toast.success('Email Verified!', {

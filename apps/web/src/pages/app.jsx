@@ -1,11 +1,11 @@
 import '../App.css'
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/navbar';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Machines from "../components/machine"
 import Challenge from '../components/challenge';
 import { ToastContainer } from 'react-toastify';
+import apiClient from '../libs/api.client';
 
 function Player() {
     const token = localStorage.getItem('token');
@@ -16,7 +16,7 @@ function Player() {
     useEffect(() => {
         if(!token) return window.location.href = '/login';
 
-        axios.get(import.meta.env.VITE_API_URL + "/challenge/progress", {
+        apiClient.get("/challenge/progress", {
             headers: {
                 "Authorization": "Bearer " + token,
             }

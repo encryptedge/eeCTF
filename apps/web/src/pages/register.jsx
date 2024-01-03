@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import apiClient from '../libs/api.client';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link } from "react-router-dom";
 
@@ -14,24 +14,17 @@ function Home() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        let data = JSON.stringify({
-            "email": email,
-            "password": password,
-            "firstName": firstName,
-            "lastName": lastName
-        });
-        
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: import.meta.env.VITE_API_URL + '/user/register',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            data : data
-        };
-        
-        axios.request(config)
+       
+        apiClient.post("/user/register", {
+            email,
+            password,
+            firstName,
+            lastName
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
             .then((response) => {
                 if (response.data.email === email) {
                     toast.success('Register Successful!', {

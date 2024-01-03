@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import apiClient from '../libs/api.client';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link } from "react-router-dom";
 
@@ -14,23 +14,16 @@ function Home() {
     let token = localStorage.getItem('token');
 
     const handleSubmit = (event) => {
-        event.preventDefault()
-        let data = JSON.stringify({
-            "email": email,
-            "password": password
-        });
+        event.preventDefault();
         
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: import.meta.env.VITE_API_URL + '/user/login',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            data : data
-        };
-        
-        axios.request(config)
+        apiClient.post("/user/login", {
+            email,
+            password
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
             .then((response) => {
                 if (response.data.message === 'Login successful') {
                     token = response.data.token;
