@@ -18,6 +18,8 @@ function WhoAmI() {
                 "Authorization": "Bearer " + token,
             }
         }).then(res => {
+            if(res.data.error) return window.location.href = '/login'
+
             if(res.data.message === 'Invalid token') return window.location.href = '/login';
             setUserWhoami(res.data);
         })
@@ -27,6 +29,8 @@ function WhoAmI() {
                 "Authorization": "Bearer " + token,
             }
         }).then(res => {
+            if(res.data.error) return window.location.href = '/login'
+
             if(res.data.message === 'Invalid token') return window.location.href = '/login';
             setTeamWhoami(res.data);
         })
@@ -36,6 +40,7 @@ function WhoAmI() {
                 "Authorization": "Bearer " + token,
             }
         }).then(res => {
+            if(res.data.error) return window.location.href = '/login'
             if(res.data.message === 'Invalid token') return window.location.href = '/login';
             setTeamStats(res.data);
         })

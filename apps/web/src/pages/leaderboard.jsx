@@ -24,6 +24,7 @@ function Leaderboard() {
     axios
       .request(config)
       .then((response) => {
+        if(!Array.isArray(response.data)) return window.location.href = '/login'
         setLeaderboard(response.data);
       })
       .catch(() => {
