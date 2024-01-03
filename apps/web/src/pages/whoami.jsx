@@ -1,7 +1,8 @@
 import '../App.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../libs/api.client';
+import Navbar from "../components/navbar";
 
 function WhoAmI() {
     const [userWhoami, setUserWhoami] = useState(null);
@@ -13,7 +14,7 @@ function WhoAmI() {
 
         if(!token) return window.location.href = '/login';
 
-        axios.get(import.meta.env.VITE_API_URL + "/user/whoami", {
+        apiClient.get("/user/whoami", {
             headers: {
                 "Authorization": "Bearer " + token,
             }
@@ -24,7 +25,7 @@ function WhoAmI() {
             setUserWhoami(res.data);
         })
 
-        axios.get(import.meta.env.VITE_API_URL + "/team/whoami", {
+        apiClient.get("/team/whoami", {
             headers: {
                 "Authorization": "Bearer " + token,
             }
@@ -35,7 +36,7 @@ function WhoAmI() {
             setTeamWhoami(res.data);
         })
 
-        axios.get(import.meta.env.VITE_API_URL + "/stats/team", {
+        apiClient.get(import.meta.env.VITE_API_URL + "/stats/team", {
             headers: {
                 "Authorization": "Bearer " + token,
             }
@@ -48,6 +49,7 @@ function WhoAmI() {
 
     return (
         <>
+            <Navbar />
             <div>
                 <img src="/ee.png" className="logo react" alt="ee logo" />
             </div>

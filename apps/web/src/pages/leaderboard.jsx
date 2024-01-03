@@ -1,7 +1,8 @@
 import "../App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from '../libs/api.client';
+import Navbar from "../components/navbar";
 
 function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -11,18 +12,12 @@ function Leaderboard() {
 
     if (!token) return (window.location.href = "/login");
 
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: import.meta.env.VITE_API_URL + "/stats/leaderboard",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    axios
-      .request(config)
+    apiClient
+      .get("/stats/leaderboard", {
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      })
       .then((response) => {
         if(!Array.isArray(response.data)) return window.location.href = '/login'
         setLeaderboard(response.data);
@@ -34,6 +29,7 @@ function Leaderboard() {
 
   return (
     <>
+      <Navbar />
       <div>
         <img src="/ee.png" className="logo react" alt="ee logo" />
       </div>
