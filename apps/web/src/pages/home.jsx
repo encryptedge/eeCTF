@@ -1,8 +1,10 @@
-import "../styles/App.css";
+import "../styles/home.styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import apiClient from "../libs/api.client";
 import Navbar from "../components/navbar";
 import { useEffect, useState } from "react";
+import { LoginCard } from "../components/cards/login-card";
+import { RegisterCard } from "../components/cards/register-card";
 
 function Home() {
   const [user, setUser] = useState(null);
@@ -32,7 +34,23 @@ function Home() {
           user ? "Welcome back, " + user.last_name : "Welcome to eeCTF"
         }
       />
-      <p>hello</p>
+      <div>
+        {user === null ? (
+          <div className='auht-grid'>
+            <LoginCard />
+            <RegisterCard />
+          </div>
+        ) : (
+          <div className='home-card'>
+            <div className='home-card-content'>
+              {/* <p>
+                You are currently in {user.team_name} team. Your team has{" "}
+                {user.team_score} points.
+              </p> */}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
