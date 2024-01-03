@@ -9,7 +9,7 @@ function Leaderboard() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (!token) return (window.location.href = "/login");
+    if (!token) return (window.location.href = "/");
 
     apiClient
       .get("/stats/leaderboard", {
@@ -18,8 +18,7 @@ function Leaderboard() {
         },
       })
       .then((response) => {
-        if (!Array.isArray(response.data))
-          return (window.location.href = "/login");
+        if (!Array.isArray(response.data)) return (window.location.href = "/");
         setLeaderboard(response.data);
       })
       .catch(() => {

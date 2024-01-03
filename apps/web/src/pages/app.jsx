@@ -16,7 +16,7 @@ function Player() {
   ]);
 
   useEffect(() => {
-    if (!token) return (window.location.href = "/login");
+    if (!token) return (window.location.href = "/");
 
     apiClient
       .get("/challenge/progress", {
@@ -25,9 +25,9 @@ function Player() {
         },
       })
       .then((res) => {
-        if (!Array.isArray(res.data)) return (window.location.href = "/login");
+        if (!Array.isArray(res.data)) return (window.location.href = "/");
         if (res.data.message === "Invalid token")
-          return (window.location.href = "/login");
+          return (window.location.href = "/");
         setMachines(res.data);
       });
   }, [token]);

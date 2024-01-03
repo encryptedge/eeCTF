@@ -32,7 +32,7 @@ function Home() {
             draggable: true,
           });
           setTimeout(() => {
-            window.location.href = "/login";
+            window.location.href = "/";
           }, 3000);
         } else {
           toast.error("Email Verification Failed!", {

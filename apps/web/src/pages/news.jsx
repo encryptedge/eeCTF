@@ -4,7 +4,7 @@ import Navbar from "../components/navbar";
 function News() {
   return (
     <>
-      <Navbar pageTitle={"rcsCTF24"} />
+      <Navbar pageTitle={"News"} />
       {/* <div className='about-elements'>
         <h2>News</h2>
         <div className='action-card'>
