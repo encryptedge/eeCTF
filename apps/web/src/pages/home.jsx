@@ -1,31 +1,15 @@
-import '../App.css'
-import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
+import "../styles/App.css";
+import "react-toastify/dist/ReactToastify.css";
+// import { Link } from "react-router-dom";
+import Navbar from "../components/navbar";
 
 function Home() {
-    return (
-        <>
-        <div>
-            <img src="/ee.png" className="logo react" alt="ee logo" />
-        </div>
-        <h1 className='home-head'>Welcome to eeCTF</h1>
-        
-        <div className='actions'>
-            <h2 className='action-title'>
-                Actions
-            </h2>
-            <div className="action-card">
-                <Link to="/about">About</Link>
-                <Link to="/app">App</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-                <Link to="/verify">Verify Account</Link>
-                <Link to="/leaderboard">Leaderboard</Link>
-                <Link to="/whoami">Whoami</Link>
-            </div>
-        </div>
-        </>
-    )
+  return (
+    <div>
+      <Navbar pageTitle='Welcome to eeCTF' />
+      <p>hello</p>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
