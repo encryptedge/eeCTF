@@ -34,7 +34,7 @@ function Player() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='player-component'>
         <div className='player-machine-section'>
           <div className='player-machine-detail'>
