@@ -27,7 +27,11 @@ function Home() {
 
   return (
     <div>
-      <Navbar pageTitle='Welcome to eeCTF' />
+      <Navbar
+        pageTitle={
+          user ? "Welcome back, " + user.last_name : "Welcome to eeCTF"
+        }
+      />
       <p>hello</p>
     </div>
   );
