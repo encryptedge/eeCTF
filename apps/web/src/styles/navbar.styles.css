@@ -1,0 +1,47 @@
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+.actions a {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.action-card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.action-card .right {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 1em;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.action-card .left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 1em;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 600px) {
+  .action-card {
+    flex-direction: column;
+  }
+}

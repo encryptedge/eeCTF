@@ -5,29 +5,6 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-  --r: 10px; /* control the radius of the circles */
-  padding: calc(2 * var(--r));
-  filter: grayscale(.4);
-  background: 
-    radial-gradient(var(--r),#0000 98%,#fff) round
-      calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),
-    linear-gradient(#fff 0 0) no-repeat
-      50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
-  
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -54,9 +31,7 @@
 .login-card {
   max-width: 30em;
   margin: 0 auto;
-  
 }
-
 
 .form-control {
   display: block;
@@ -69,10 +44,11 @@
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25em;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  font-family: ;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
   margin: 20px;
-  
+
   /* add pixlated border  */
   clip-path: polygon(
     0px calc(100% - 9px),
@@ -99,8 +75,7 @@
     3px 6px,
     3px 9px,
     0px 9px
-  );  
-
+  );
 }
 
 .player-component {
@@ -128,48 +103,22 @@
   height: 100%;
   display: flex;
   flex-direction: column;
- 
 }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-  
-}
-
-@keyframes slide-in-bck-center{0%{transform:translateZ(600px);opacity:0}100%{transform:translateZ(0);opacity:1}}
-
-
-
-
-.action-title {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.action-card {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  align-items: center;
-  justify-content: center;
-
-}
-@media (max-width: 600px) {
-  .action-card {
-    flex-direction: column; 
-
+@keyframes slide-in-bck-center {
+  0% {
+    transform: translateZ(600px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0);
+    opacity: 1;
   }
 }
 
 .player-mlists {
-padding: 2em;
-margin: 10%;
+  padding: 2em;
+  margin: 10%;
 }
 
 .player-machine-title {
@@ -188,72 +137,75 @@ margin: 10%;
 }
 
 .btn {
-  border: #646cff 5px solid ;
+  border: #646cff 5px solid;
   color: #0000;
   --g: no-repeat linear-gradient(#5793f2 0 0) 0 0;
   background: var(--g), var(--g);
   background-size: 0 80%;
-  -webkit-background-clip: padding-box,text;
-          background-clip: padding-box,text;
+  -webkit-background-clip: padding-box, text;
+  background-clip: padding-box, text;
   -webkit-box-decoration-break: clone;
-          box-decoration-break: clone;
-  animation: 
-    t 1.2s  .5s both,
+  box-decoration-break: clone;
+  animation:
+    t 1.2s 0.5s both,
     b 1.2s 1.3s both;
-    /* This adds pixilated border */
-    clip-path: polygon(
-      0px calc(100% - 9px),
-      3px calc(100% - 9px),
-      3px calc(100% - 6px),
-      6px calc(100% - 3px),
-      9px calc(100% - 3px),
-      9px 100%,
-      calc(100% - 9px) 100%,
-      calc(100% - 9px) calc(100% - 3px),
-      calc(100% - 6px) calc(100% - 3px),
-      calc(100% - 3px) calc(100% - 6px),
-      calc(100% - 3px) calc(100% - 9px),
-      100% calc(100% - 9px),
-      100% 9px,
-      calc(100% - 3px) 9px,
-      calc(100% - 3px) 6px,
-      calc(100% - 6px) 3px,
-      calc(100% - 9px) 3px,
-      calc(100% - 9px) 0px,
-      9px 0px,
-      9px 3px,
-      6px 3px,
-      3px 6px,
-      3px 9px,
-      0px 9px
-    );
+  /* This adds pixilated border */
+  clip-path: polygon(
+    0px calc(100% - 9px),
+    3px calc(100% - 9px),
+    3px calc(100% - 6px),
+    6px calc(100% - 3px),
+    9px calc(100% - 3px),
+    9px 100%,
+    calc(100% - 9px) 100%,
+    calc(100% - 9px) calc(100% - 3px),
+    calc(100% - 6px) calc(100% - 3px),
+    calc(100% - 3px) calc(100% - 6px),
+    calc(100% - 3px) calc(100% - 9px),
+    100% calc(100% - 9px),
+    100% 9px,
+    calc(100% - 3px) 9px,
+    calc(100% - 3px) 6px,
+    calc(100% - 6px) 3px,
+    calc(100% - 9px) 3px,
+    calc(100% - 9px) 0px,
+    9px 0px,
+    9px 3px,
+    6px 3px,
+    3px 6px,
+    3px 9px,
+    0px 9px
+  );
 }
-@keyframes t{
-  to {background-size:150% 100%}
+@keyframes t {
+  to {
+    background-size: 150% 100%;
+  }
 }
 @keyframes b {
-  to {background-position:-200% 0,0 0}
+  to {
+    background-position:
+      -200% 0,
+      0 0;
+  }
 }
 
-.forminput{
-width: 90%;
-border-radius:0.5em;
-padding: 0.5em;
-font-family: Minecraft;
-font-size: 0.7em;
+.forminput {
+  width: 90%;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  font-family: Minecraft;
+  font-size: 0.7em;
 }
 
- 
-
-.home-head{
+.home-head {
   animation: slide-in-bck-center 1000ms normal;
 }
 
 /* This is challenge section  components */
 
 /* This gives pixilated borders to website */
-.player-component{
-  
+.player-component {
   clip-path: polygon(
     0px calc(100% - 15px),
     5px calc(100% - 15px),
@@ -282,39 +234,39 @@ font-size: 0.7em;
   );
 }
 
-.player-machine-detail{
+.player-machine-detail {
   padding: 1em;
 }
-.player-challenge-button{
-margin: 10px;
-clip-path: polygon(
-  0px calc(100% - 6px),
-  2px calc(100% - 6px),
-  2px calc(100% - 4px),
-  4px calc(100% - 2px),
-  6px calc(100% - 2px),
-  6px 100%,
-  calc(100% - 6px) 100%,
-  calc(100% - 6px) calc(100% - 2px),
-  calc(100% - 4px) calc(100% - 2px),
-  calc(100% - 2px) calc(100% - 4px),
-  calc(100% - 2px) calc(100% - 6px),
-  100% calc(100% - 6px),
-  100% 6px,
-  calc(100% - 2px) 6px,
-  calc(100% - 2px) 4px,
-  calc(100% - 4px) 2px,
-  calc(100% - 6px) 2px,
-  calc(100% - 6px) 0px,
-  6px 0px,
-  6px 2px,
-  4px 2px,
-  2px 4px,
-  2px 6px,
-  0px 6px
-);
+.player-challenge-button {
+  margin: 10px;
+  clip-path: polygon(
+    0px calc(100% - 6px),
+    2px calc(100% - 6px),
+    2px calc(100% - 4px),
+    4px calc(100% - 2px),
+    6px calc(100% - 2px),
+    6px 100%,
+    calc(100% - 6px) 100%,
+    calc(100% - 6px) calc(100% - 2px),
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 4px),
+    calc(100% - 2px) calc(100% - 6px),
+    100% calc(100% - 6px),
+    100% 6px,
+    calc(100% - 2px) 6px,
+    calc(100% - 2px) 4px,
+    calc(100% - 4px) 2px,
+    calc(100% - 6px) 2px,
+    calc(100% - 6px) 0px,
+    6px 0px,
+    6px 2px,
+    4px 2px,
+    2px 4px,
+    2px 6px,
+    0px 6px
+  );
 }
-.player-challenge-compl-button{
+.player-challenge-compl-button {
   margin: 5px;
   border: #646cff 1px solid;
   clip-path: polygon(
@@ -341,44 +293,13 @@ clip-path: polygon(
   );
 }
 
-.who-card{
+.who-card {
   padding: 10px;
   display: flex;
   flex-direction: column;
   row-gap: 2em;
 }
-.user-wrapper{
-  padding: 1em;
-  border: #ccc 5px solid;
-  clip-path: polygon(
-    0px calc(100% - 9px),
-    3px calc(100% - 9px),
-    3px calc(100% - 6px),
-    6px calc(100% - 3px),
-    9px calc(100% - 3px),
-    9px 100%,
-    calc(100% - 9px) 100%,
-    calc(100% - 9px) calc(100% - 3px),
-    calc(100% - 6px) calc(100% - 3px),
-    calc(100% - 3px) calc(100% - 6px),
-    calc(100% - 3px) calc(100% - 9px),
-    100% calc(100% - 9px),
-    100% 9px,
-    calc(100% - 3px) 9px,
-    calc(100% - 3px) 6px,
-    calc(100% - 6px) 3px,
-    calc(100% - 9px) 3px,
-    calc(100% - 9px) 0px,
-    9px 0px,
-    9px 3px,
-    6px 3px,
-    3px 6px,
-    3px 9px,
-    0px 9px
-  );
-  );
-}
-.team-wrapper{
+.user-wrapper {
   padding: 1em;
   border: #ccc 5px solid;
   clip-path: polygon(
@@ -408,7 +329,37 @@ clip-path: polygon(
     0px 9px
   );
 }
-.stats-wrapper{
+.team-wrapper {
+  padding: 1em;
+  border: #ccc 5px solid;
+  clip-path: polygon(
+    0px calc(100% - 9px),
+    3px calc(100% - 9px),
+    3px calc(100% - 6px),
+    6px calc(100% - 3px),
+    9px calc(100% - 3px),
+    9px 100%,
+    calc(100% - 9px) 100%,
+    calc(100% - 9px) calc(100% - 3px),
+    calc(100% - 6px) calc(100% - 3px),
+    calc(100% - 3px) calc(100% - 6px),
+    calc(100% - 3px) calc(100% - 9px),
+    100% calc(100% - 9px),
+    100% 9px,
+    calc(100% - 3px) 9px,
+    calc(100% - 3px) 6px,
+    calc(100% - 6px) 3px,
+    calc(100% - 9px) 3px,
+    calc(100% - 9px) 0px,
+    9px 0px,
+    9px 3px,
+    6px 3px,
+    3px 6px,
+    3px 9px,
+    0px 9px
+  );
+}
+.stats-wrapper {
   padding: 1em;
   border: #ccc 5px solid;
   clip-path: polygon(

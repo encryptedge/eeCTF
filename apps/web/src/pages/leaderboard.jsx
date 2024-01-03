@@ -1,7 +1,6 @@
-import "../App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import apiClient from '../libs/api.client';
+import apiClient from "../libs/api.client";
 import Navbar from "../components/navbar";
 
 function Leaderboard() {
@@ -16,10 +15,11 @@ function Leaderboard() {
       .get("/stats/leaderboard", {
         headers: {
           Authorization: "Bearer " + token,
-        }
+        },
       })
       .then((response) => {
-        if(!Array.isArray(response.data)) return window.location.href = '/login'
+        if (!Array.isArray(response.data))
+          return (window.location.href = "/login");
         setLeaderboard(response.data);
       })
       .catch(() => {
@@ -29,12 +29,8 @@ function Leaderboard() {
 
   return (
     <>
-      <Navbar />
-      <div>
-        <img src="/ee.png" className="logo react" alt="ee logo" />
-      </div>
-      <h1>Leaderboard</h1>
-      <div className="leaderboard-wrapper">
+      <Navbar pageTitle={"Leaderboard"} />
+      <div className='leaderboard-wrapper'>
         <table>
           <thead>
             <tr>
