@@ -34,7 +34,7 @@ function Player() {
                 <div className='player-machine-section'>
                     <div className='player-machine-detail'>
                         <h1 className='player-machine-title'>Machines</h1>
-                        <div className='player-machine-list'>
+                        <div className='player-mlist'>
                             {machines.map((machine, index) => (
                                 <Machines 
                                     key={index} 

@@ -8,7 +8,7 @@ function Home() {
         <div>
             <img src="/ee.png" className="logo react" alt="ee logo" />
         </div>
-        <h1>Welcome to eeCTF</h1>
+        <h1 className='home-head'>Welcome to eeCTF</h1>
         
         <div className='actions'>
             <h2 className='action-title'>

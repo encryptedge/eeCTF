@@ -80,6 +80,7 @@ function Home() {
                     </div>
                     <div className="form-el-container">
                         <input
+                        className='forminput'
                             type="text"
                             id="email"
                             value={email}
@@ -94,6 +95,7 @@ function Home() {
                     </div>
                     <div className="form-el-container">
                     <input
+                    className='forminput'
                         type="password"
                         id="password"
                         value={password}
@@ -104,10 +106,11 @@ function Home() {
                 </div>
                 <div className="form-control">
                     <div className="form-el-container">
-                        <label htmlFor="firstName">firstName</label>
+                        <label htmlFor="firstName">First Name</label>
                     </div>
                     <div className="form-el-container">
                     <input
+                    className='forminput'
                         type="firstName"
                         id="firstName"
                         value={firstName}
@@ -118,10 +121,11 @@ function Home() {
                 </div>
                 <div className="form-control">
                     <div className="form-el-container">
-                        <label htmlFor="lastName">lastName</label>
+                        <label htmlFor="lastName">Last Name</label>
                     </div>
                     <div className="form-el-container">
                     <input
+                    className='forminput'
                         type="lastName"
                         id="lastName"
                         value={lastName}

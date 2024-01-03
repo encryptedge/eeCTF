@@ -10,10 +10,10 @@ const machines = ({kid, name, challenges, expanded, setExpanded, setCurrentChall
 
     return (
         <div className='player-challenge-list'>
-            <button onClick={setMeUp}> {expanded == kid ? "-" : "+"} {name}</button>
+            <button onClick={setMeUp} className="player-challenge-button"> {expanded == kid ? "-" : "+"} {name}</button>
             <div>
                 {expanded == kid && challenges.map((challenge, index) => (
-                    <button onClick={()=> {
+                    <button className="player-challenge-compl-button"onClick={()=> {
                         console.log(kid, index)
                         setCurrentChallenge([kid,index])
                     }} key={index} >{challenge.name}</button>
