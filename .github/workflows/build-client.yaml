@@ -7,7 +7,17 @@ on:
         default: '0.0.0.0:4000'
         required: false
         type: string
-        description: 'Server IP for RCS CTF API Server'
+        description: 'Server IP (with port) for RCS CTF API Server'
+      release_version:
+        default: '0.0.0-dev'
+        required: false
+        type: string
+        description: 'Release version for the client'
+      release_name:
+        default: 'local-development'
+        required: false
+        type: string
+        description: 'Release name for the client'
 
 permissions:
   issues: write
@@ -59,10 +69,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
+          tagName: ${{ github.event.inputs.release_name }}-v${{ github.event.inputs.release_version }} # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: '${{ github.event.inputs.release_name }} v${{ github.event.inputs.release_version }}'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
-          prerelease: false
+          prerelease: true
           projectPath: apps/desktop/src-tauri
           distPath: apps/desktop/src
