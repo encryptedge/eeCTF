@@ -36,7 +36,7 @@ function WhoAmI() {
             setTeamWhoami(res.data);
         })
 
-        apiClient.get(import.meta.env.VITE_API_URL + "/stats/team", {
+        apiClient.get("/stats/team", {
             headers: {
                 "Authorization": "Bearer " + token,
             }
