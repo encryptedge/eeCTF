@@ -1,13 +1,13 @@
 name: Create issues from TODOs
 
 on:
-  workflow_dispatch:
-    inputs:
-      importAll:
-        default: 'false'
-        required: false
-        type: boolean
-        description: Enable, if you want to import all TODOs. Runs on checked out branch! Only use if you're sure what you are doing.
+  # workflow_dispatch:
+  #   inputs:
+  #     importAll:
+  #       default: false
+  #       required: false
+  #       type: boolean
+  #       description: Enable, if you want to import all TODOs. Runs on checked out branch! Only use if you're sure what you are doing.
   push:
 
 permissions:
