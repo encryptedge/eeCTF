@@ -4,7 +4,7 @@ import Navbar from "../components/navbar";
 function Home() {
   return (
     <>
-      <Navbar pageTitle={"rcsCTF24"} />
+      <Navbar pageTitle={"About"} />
       <div className='about-elements'>
         <h2>Guides</h2>
         <div className='action-card'>

@@ -20,6 +20,13 @@
   }
 }
 
+.action-card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .card {
   padding: 2em;
 }

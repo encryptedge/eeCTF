@@ -14,7 +14,7 @@ function WhoAmI() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (!token) return (window.location.href = "/login");
+    if (!token) return (window.location.href = "/");
 
     apiClient
       .get("/user/whoami", {
@@ -23,10 +23,10 @@ function WhoAmI() {
         },
       })
       .then((res) => {
-        if (res.data.error) return (window.location.href = "/login");
+        if (res.data.error) return (window.location.href = "/");
 
         if (res.data.message === "Invalid token")
-          return (window.location.href = "/login");
+          return (window.location.href = "/");
         setUserWhoami(res.data);
       });
 
@@ -37,10 +37,10 @@ function WhoAmI() {
         },
       })
       .then((res) => {
-        if (res.data.error) return (window.location.href = "/login");
+        if (res.data.error) return (window.location.href = "/");
 
         if (res.data.message === "Invalid token")
-          return (window.location.href = "/login");
+          return (window.location.href = "/");
         setTeamWhoami(res.data);
       });
 
@@ -51,9 +51,9 @@ function WhoAmI() {
         },
       })
       .then((res) => {
-        if (res.data.error) return (window.location.href = "/login");
+        if (res.data.error) return (window.location.href = "/");
         if (res.data.message === "Invalid token")
-          return (window.location.href = "/login");
+          return (window.location.href = "/");
         setTeamStats(res.data);
       });
   }, []);
