@@ -43,20 +43,16 @@ function WhoAmI() {
           return (window.location.href = "/");
         setTeamWhoami(res.data);
       });
-
-    apiClient
-      .get(import.meta.env.VITE_API_URL + "/stats/team", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        if (res.data.error) return (window.location.href = "/");
-        if (res.data.message === "Invalid token")
-          return (window.location.href = "/");
-        setTeamStats(res.data);
-      });
-  }, []);
+        apiClient.get("/stats/team", {
+            headers: {
+                "Authorization": "Bearer " + token,
+            }
+        }).then(res => {
+            if(res.data.error) return window.location.href = '/login'
+            if(res.data.message === 'Invalid token') return window.location.href = '/login';
+            setTeamStats(res.data);
+        })
+    }, [])
 
   return (
     <>

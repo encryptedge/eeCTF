@@ -21,14 +21,16 @@ jobs:
         with:
           fetch-depth: 2
  
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
- 
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Run before install
+        run: |
+          bash bootstrap.sh http://127.0.0.1:4000
+
       - name: Install dependencies
-        run: yarn
- 
-      - name: Build
-        run: yarn build
+        shell: bash
+        run: pnpm i
+
+      - name: Install Dependencies
+        run: pnpm build

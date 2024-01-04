@@ -1,0 +1,7 @@
+{
+  "name": "deployer-url",
+  "version": "1.0.0",
+  "main": "host.js",
+  "license": "MIT",
+  "type": "module"
+}

@@ -1,0 +1,91 @@
+name: Build and Release Desktop Client
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_url:
+        default: 'http://127.0.0.1:4000'
+        required: false
+        type: string
+        description: 'Server URL (with port) for RCS CTF API Server'
+      release_version:
+        default: '0.0.0-dev'
+        required: false
+        type: string
+        description: 'Release version for the client'
+      release_name:
+        default: 'local-development'
+        required: false
+        type: string
+        description: 'Release name for the client'
+      is_pre_release:
+        default: true
+        required: false
+        type: boolean
+        description: 'Is this a pre-release?'
+      draft_release:
+        default: true
+        required: false
+        type: boolean
+        description: 'Do you want to draft?'
+
+permissions:
+  issues: write
+  repository-projects: read
+  contents: write
+
+jobs:
+  buildapp:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+      
+      - name: Copy before build
+        run: |
+          bash bootstrap.sh ${{ github.event.inputs.server_url }}
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm i
+
+      - name: Build
+        run: pnpm build:client
+
+      - name: Copy before release
+        run: |
+          bash ./scripts/build-client.sh
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+  
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.event.inputs.release_name }}-v${{ github.event.inputs.release_version }} # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: '${{ github.event.inputs.release_name }} v${{ github.event.inputs.release_version }}'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: ${{ github.event.inputs.draft_release }}
+          prerelease: ${{ github.event.inputs.is_pre_release }}
+          projectPath: apps/desktop/src-tauri
+          distPath: apps/desktop/dist
