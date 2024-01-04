@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:client": "cross-env VITE_CL_MODE=client vite",
     "build": "vite build",
-    "build:client": "MODE=client vite build",
+    "build:client": "cross-env VITE_CL_MODE=client vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

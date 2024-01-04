@@ -24,5 +24,13 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup
 
+      - name: Run before install
+        run: |
+          bash bootstrap.sh http://127.0.0.1:4000
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm i
+
       - name: Install Dependencies
         run: pnpm build

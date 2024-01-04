@@ -1,10 +1,10 @@
-import ip from "deployer-url"
+import customhost from "deployer-url"
 import axios from 'axios';
 
-let url;
+export let url;
 
-if (import.meta.env.MODE == "client") {
-    url = ip;
+if (import.meta.env.VITE_CL_MODE == "client") {
+    url = customhost;
 } else {
     url = import.meta.env.VITE_API_URL;
 }

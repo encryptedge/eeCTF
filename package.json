@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "build:client": "turbo build:client",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -11,6 +12,7 @@
     "@bravo68web/eslint-config": "^1.2.2",
     "@bravo68web/prettier-config": "^1.2.2",
     "@bravo68web/tsconfig": "^1.2.2",
+    "cross-env": "^7.0.3",
     "nodemon": "^3.0.2",
     "prettier": "^3.1.0",
     "turbo": "latest"
