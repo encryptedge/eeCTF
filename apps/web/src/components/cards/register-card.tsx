@@ -1,26 +1,27 @@
 import { useState } from "react";
-import apiClient from "../libs/api.client";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "../components/navbar";
+import apiClient from "../../libs/api.client";
 
-function Home() {
+export const RegisterCard = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  let token = localStorage.getItem("token");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     apiClient
       .post(
-        "/user/login",
+        "/user/register",
         {
           email,
           password,
+          firstName,
+          lastName,
         },
         {
           headers: {
@@ -29,10 +30,8 @@ function Home() {
         }
       )
       .then((response) => {
-        if (response.data.message === "Login successful") {
-          token = response.data.token;
-          localStorage.setItem("token", token);
-          toast.success("Login Successful!", {
+        if (response.data.email === email) {
+          toast.success("Register Successful!", {
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -40,10 +39,10 @@ function Home() {
             draggable: true,
           });
           setTimeout(() => {
-            window.location.href = "/app";
+            window.location.href = "/verify";
           }, 3000);
         } else {
-          toast.error("Login Failed!", {
+          toast.error("Register Failed!", {
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -53,7 +52,7 @@ function Home() {
         }
       })
       .catch(() => {
-        toast.error("Login Failed!", {
+        toast.error("Register Failed!", {
           position: "bottom-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -64,8 +63,7 @@ function Home() {
   };
 
   return (
-    <>
-      <Navbar pageTitle={"Login Portal"} />
+    <div>
       <div className='login-card'>
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
@@ -99,29 +97,44 @@ function Home() {
               />
             </div>
           </div>
+          <div className='form-control'>
+            <div className='form-el-container'>
+              <label htmlFor='firstName'>First Name</label>
+            </div>
+            <div className='form-el-container'>
+              <input
+                className='forminput'
+                type='firstName'
+                id='firstName'
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                placeholder='Enter your firstName'
+              />
+            </div>
+          </div>
+          <div className='form-control'>
+            <div className='form-el-container'>
+              <label htmlFor='lastName'>Last Name</label>
+            </div>
+            <div className='form-el-container'>
+              <input
+                className='forminput'
+                type='lastName'
+                id='lastName'
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+                placeholder='Enter your lastName'
+              />
+            </div>
+          </div>
           <button className='btn' type='submit'>
-            Sign In
+            Sign Up
           </button>
         </form>
       </div>
       <p className='read-the-docs'>
-        Don&apos;t have a account, register from{" "}
-        <Link to='/register'>here</Link>.
+        Already have a account? Login from <Link to='/login'>here</Link>.
       </p>
-      <ToastContainer
-        position='top-right'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='dark'
-      />
-    </>
+    </div>
   );
-}
-
-export default Home;
+};

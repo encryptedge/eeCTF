@@ -1,0 +1,301 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.action-card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.login-card {
+  max-width: 30em;
+  margin: 0 auto;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #cec4c4;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25em;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  margin: 20px;
+
+  /* add pixlated border  */
+  clip-path: polygon(
+    0px calc(100% - 9px),
+    3px calc(100% - 9px),
+    3px calc(100% - 6px),
+    6px calc(100% - 3px),
+    9px calc(100% - 3px),
+    9px 100%,
+    calc(100% - 9px) 100%,
+    calc(100% - 9px) calc(100% - 3px),
+    calc(100% - 6px) calc(100% - 3px),
+    calc(100% - 3px) calc(100% - 6px),
+    calc(100% - 3px) calc(100% - 9px),
+    100% calc(100% - 9px),
+    100% 9px,
+    calc(100% - 3px) 9px,
+    calc(100% - 3px) 6px,
+    calc(100% - 6px) 3px,
+    calc(100% - 9px) 3px,
+    calc(100% - 9px) 0px,
+    9px 0px,
+    9px 3px,
+    6px 3px,
+    3px 6px,
+    3px 9px,
+    0px 9px
+  );
+}
+
+.player-component {
+  margin: auto;
+  border: 10px solid #ccc;
+  height: 700px;
+  width: 1200px;
+  /* width: 100%;
+  height: 100%; */
+  display: flex;
+}
+
+.player-machine-section {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  display: flex;
+  border: 1px solid #ccc;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.player-challenge-detail-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slide-in-bck-center {
+  0% {
+    transform: translateZ(600px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+.player-mlists {
+  padding: 2em;
+  margin: 10%;
+}
+
+.player-machine-title {
+  position: sticky;
+  top: 0;
+}
+
+.leaderboard-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  border: #646cff 5px solid;
+  color: #0000;
+  --g: no-repeat linear-gradient(#5793f2 0 0) 0 0;
+  background: var(--g), var(--g);
+  background-size: 0 80%;
+  -webkit-background-clip: padding-box, text;
+  background-clip: padding-box, text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation:
+    t 1.2s 0.5s both,
+    b 1.2s 1.3s both;
+  /* This adds pixilated border */
+  clip-path: polygon(
+    0px calc(100% - 9px),
+    3px calc(100% - 9px),
+    3px calc(100% - 6px),
+    6px calc(100% - 3px),
+    9px calc(100% - 3px),
+    9px 100%,
+    calc(100% - 9px) 100%,
+    calc(100% - 9px) calc(100% - 3px),
+    calc(100% - 6px) calc(100% - 3px),
+    calc(100% - 3px) calc(100% - 6px),
+    calc(100% - 3px) calc(100% - 9px),
+    100% calc(100% - 9px),
+    100% 9px,
+    calc(100% - 3px) 9px,
+    calc(100% - 3px) 6px,
+    calc(100% - 6px) 3px,
+    calc(100% - 9px) 3px,
+    calc(100% - 9px) 0px,
+    9px 0px,
+    9px 3px,
+    6px 3px,
+    3px 6px,
+    3px 9px,
+    0px 9px
+  );
+}
+@keyframes t {
+  to {
+    background-size: 150% 100%;
+  }
+}
+@keyframes b {
+  to {
+    background-position:
+      -200% 0,
+      0 0;
+  }
+}
+
+.forminput {
+  width: 90%;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  font-family: Minecraft;
+  font-size: 0.7em;
+}
+
+.home-head {
+  animation: slide-in-bck-center 1000ms normal;
+}
+
+/* This is challenge section  components */
+
+/* This gives pixilated borders to website */
+.player-component {
+  clip-path: polygon(
+    0px calc(100% - 15px),
+    5px calc(100% - 15px),
+    5px calc(100% - 10px),
+    10px calc(100% - 5px),
+    15px calc(100% - 5px),
+    15px 100%,
+    calc(100% - 15px) 100%,
+    calc(100% - 15px) calc(100% - 5px),
+    calc(100% - 10px) calc(100% - 5px),
+    calc(100% - 5px) calc(100% - 10px),
+    calc(100% - 5px) calc(100% - 15px),
+    100% calc(100% - 15px),
+    100% 15px,
+    calc(100% - 5px) 15px,
+    calc(100% - 5px) 10px,
+    calc(100% - 10px) 5px,
+    calc(100% - 15px) 5px,
+    calc(100% - 15px) 0px,
+    15px 0px,
+    15px 5px,
+    10px 5px,
+    5px 10px,
+    5px 15px,
+    0px 15px
+  );
+}
+
+.player-machine-detail {
+  padding: 1em;
+}
+.player-challenge-button {
+  margin: 10px;
+  clip-path: polygon(
+    0px calc(100% - 6px),
+    2px calc(100% - 6px),
+    2px calc(100% - 4px),
+    4px calc(100% - 2px),
+    6px calc(100% - 2px),
+    6px 100%,
+    calc(100% - 6px) 100%,
+    calc(100% - 6px) calc(100% - 2px),
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 4px),
+    calc(100% - 2px) calc(100% - 6px),
+    100% calc(100% - 6px),
+    100% 6px,
+    calc(100% - 2px) 6px,
+    calc(100% - 2px) 4px,
+    calc(100% - 4px) 2px,
+    calc(100% - 6px) 2px,
+    calc(100% - 6px) 0px,
+    6px 0px,
+    6px 2px,
+    4px 2px,
+    2px 4px,
+    2px 6px,
+    0px 6px
+  );
+}
+.player-challenge-compl-button {
+  margin: 5px;
+  border: #646cff 1px solid;
+  clip-path: polygon(
+    0px calc(100% - 4px),
+    2px calc(100% - 4px),
+    2px calc(100% - 2px),
+    4px calc(100% - 2px),
+    4px 100%,
+    calc(100% - 4px) 100%,
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 4px),
+    100% calc(100% - 4px),
+    100% 4px,
+    calc(100% - 2px) 4px,
+    calc(100% - 2px) 2px,
+    calc(100% - 4px) 2px,
+    calc(100% - 4px) 0px,
+    4px 0px,
+    4px 2px,
+    2px 2px,
+    2px 4px,
+    0px 4px
+  );
+}

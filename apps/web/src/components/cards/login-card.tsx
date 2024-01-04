@@ -1,12 +1,9 @@
 import { useState } from "react";
-import apiClient from "../libs/api.client";
-import { ToastContainer, toast } from "react-toastify";
+import apiClient from "../../libs/api.client";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-import "react-toastify/dist/ReactToastify.css";
-import Navbar from "../components/navbar";
-
-function Home() {
+export const LoginCard = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -62,10 +59,8 @@ function Home() {
         });
       });
   };
-
   return (
-    <>
-      <Navbar pageTitle={"Login Portal"} />
+    <div>
       <div className='login-card'>
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
@@ -108,20 +103,6 @@ function Home() {
         Don&apos;t have a account, register from{" "}
         <Link to='/register'>here</Link>.
       </p>
-      <ToastContainer
-        position='top-right'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='dark'
-      />
-    </>
+    </div>
   );
-}
-
-export default Home;
+};
