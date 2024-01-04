@@ -1,3 +1,9 @@
 {
-    "extends": "@bravo68web/tsconfig/base.json"
+    "extends": "@bravo68web/tsconfig/base.json",
+    "exclude": [
+        "apps/web",
+        "apps/desktop/dist",
+        "packages/api/dist",
+        "packages/deployer-url",
+    ]
 }

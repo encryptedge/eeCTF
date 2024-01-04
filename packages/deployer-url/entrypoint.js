@@ -1,8 +1,14 @@
-import fs from 'node:fs';
+/* eslint-disable unicorn/prefer-node-protocol */
+import fs from "fs";
 
 const processargs = process.argv.slice(2);
-const ip = processargs[0];
+const host = processargs[0];
 
-fs.writeFileSync('./config.json', JSON.stringify({ ip }));
+let data = `
+let hostname = "${host}";
+export default hostname;
+`;
 
-console.log("Deployer URL set to " + ip + ".");
+fs.writeFileSync('./host.js', data);
+
+console.log("Deployer URL set to " + host + ".");

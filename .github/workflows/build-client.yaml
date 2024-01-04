@@ -3,11 +3,11 @@ name: Build and Release Desktop Client
 on:
   workflow_dispatch:
     inputs:
-      serverip:
-        default: '0.0.0.0:4000'
+      server_url:
+        default: 'http://127.0.0.1:4000'
         required: false
         type: string
-        description: 'Server IP (with port) for RCS CTF API Server'
+        description: 'Server URL (with port) for RCS CTF API Server'
       release_version:
         default: '0.0.0-dev'
         required: false
@@ -53,11 +53,14 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup
-
+      
       - name: Copy before build
         run: |
-          cd packages/deployer-url
-          node entrypoint.js ${{ github.event.inputs.serverip }}
+          bash bootstrap.sh ${{ github.event.inputs.server_url }}
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm i
 
       - name: Build
         run: pnpm build:client
