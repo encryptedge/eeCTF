@@ -85,4 +85,4 @@ jobs:
           releaseDraft: ${{ github.event.inputs.draft_release }}
           prerelease: ${{ github.event.inputs.is_pre_release }}
           projectPath: apps/desktop/src-tauri
-          distPath: apps/desktop/src
+          distPath: apps/desktop/dist
