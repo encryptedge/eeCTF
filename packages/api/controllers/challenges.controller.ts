@@ -10,13 +10,13 @@ export class ChallengeController extends ChallengeService {
             return ctx.json({
                 status: 201,
                 message: data
-            });
+            }, 201);
         }
         catch (error: any) {
             return ctx.json({
                 status: 500,
                 error: error.message
-            });
+            }, 500);
         }
     };
 
@@ -33,7 +33,7 @@ export class ChallengeController extends ChallengeService {
             return ctx.json({
                 status: 404,
                 error: error.message
-            });
+            }, 404);
         }
     };
 
@@ -49,7 +49,7 @@ export class ChallengeController extends ChallengeService {
             return ctx.json({
                 status: 500,
                 error: error.message
-            });
+            }, 500);
         }
     };
 
@@ -64,19 +64,13 @@ export class ChallengeController extends ChallengeService {
             });
         }
         catch (error: any) {
-            // eslint-disable-next-line unicorn/prefer-ternary
-            if (error.message === "No data found") {
-                return ctx.json({
+            return error.message === "No data found" ? ctx.json({
                     status: 404,
                     error: error.message
-                });
-            } else {
-                return ctx.json({
+                }, 404) : ctx.json({
                     status: 500,
                     error: error.message
-                });
-            
-            }
+                }, 500);
         }
     };
 
@@ -96,7 +90,7 @@ export class ChallengeController extends ChallengeService {
                 challenge_id: challengeId
             });
             return ctx.json({
-                status: 202,
+                status: 200,
                 message: data
             });
         }
@@ -104,39 +98,39 @@ export class ChallengeController extends ChallengeService {
             switch (error.message) {
                 case "Wrong flag": {
                     return ctx.json({
-                        status: 403,
+                        status: 418,
                         error: error.message
-                    });
+                    }, 418);
                 }
                 case "User not in team": {
                     return ctx.json({
-                        status: 401,
+                        status: 403,
                         error: error.message
-                    });
+                    }, 403);
                 }
                 case "Failed to find challenge": {
                     return ctx.json({
                         status: 404,
                         error: error.message
-                    });
+                    }, 404);
                 }
                 case "Invalid request body": {
                     return ctx.json({
                         status: 400,
                         error: error.message
-                    });
+                    }, 400);
                 }
                 case "Already solved": {
                     return ctx.json({
                         status: 304,
                         error: error.message
-                    });
+                    }, 304);
                 }
                 default: {
                     return ctx.json({
                         status: 500,
                         error: error.message
-                    });
+                    }, 500);
                 }
             }
         }

@@ -28,9 +28,12 @@ export class AuthMiddleware {
             return next();
         }
         catch (error: any) {
-            return ctx.json({
-                error: error.message
-            });
+            switch (error.message) {
+                case "No token provided": { return ctx.json({ status: 400, message: error.message }, 400); }
+                case "User is not admin": { return ctx.json({ status: 403, message: error.message }, 403); }
+                case "User not in team": { return ctx.json({ status: 403, message: error.message }, 403); }
+                default: { return ctx.json({ status: 500, message: error.message }, 500); }
+            }
         }
     };
 }

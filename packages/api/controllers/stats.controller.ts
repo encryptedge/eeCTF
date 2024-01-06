@@ -16,10 +16,10 @@ export class StatsControtoller extends StatsService {
             return error.message === "No team scores found" ? ctx.json({
                     status: 404,
                     error: error.message
-                }) : ctx.json({
+                }, 404) : ctx.json({
                     status: 500,
                     error: error.message
-                });
+                }, 500);
         }
     };
 
@@ -35,10 +35,10 @@ export class StatsControtoller extends StatsService {
             return error.message === "No team scores found" ? ctx.json({
                     status: 404,
                     error: error.message
-                }) : ctx.json({
+                }, 404) : ctx.json({
                     status: 500,
                     error: error.message
-                });
+                }, 500);
         }
     };
 }
