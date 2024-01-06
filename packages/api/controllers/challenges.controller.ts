@@ -7,10 +7,14 @@ export class ChallengeController extends ChallengeService {
         try {
             const reqBody = await ctx.req.json();
             const data = await this.createMachineS(reqBody);
-            return ctx.json(data);
+            return ctx.json({
+                status: 201,
+                message: data
+            });
         }
         catch (error: any) {
             return ctx.json({
+                status: 500,
                 error: error.message
             });
         }
@@ -20,10 +24,14 @@ export class ChallengeController extends ChallengeService {
         try {
             const machineId = ctx.req.param("machineId");
             const data = await this.getMachineByIdS(machineId);
-            return ctx.json(data);
+            return ctx.json({
+                status: 200,
+                message: data
+            });
         }
         catch (error: any) {
             return ctx.json({
+                status: 404,
                 error: error.message
             });
         }
@@ -32,10 +40,14 @@ export class ChallengeController extends ChallengeService {
     public getMachines = async (ctx: Context) => {
         try {
             const data = await this.getMachinesS();
-            return ctx.json(data);
+            return ctx.json({
+                status: 200,
+                message: data
+            });
         }
         catch (error: any) {
             return ctx.json({
+                status: 500,
                 error: error.message
             });
         }
@@ -45,10 +57,15 @@ export class ChallengeController extends ChallengeService {
         try {
             const userTeamID = await ctx.get("team_id");
             const data = await this.getTeamProgressS(userTeamID);
-            return ctx.json(data);
+            return ctx.json({
+                status: 200,
+                message: data
+            
+            });
         }
         catch (error: any) {
             return ctx.json({
+                status: 500,
                 error: error.message
             });
         }
@@ -69,14 +86,50 @@ export class ChallengeController extends ChallengeService {
                 team_id: userTeamID,
                 challenge_id: challengeId
             });
-            return ctx.json(data);
+            return ctx.json({
+                status: 202,
+                message: data
+            });
         }
         catch (error: any) {
-            return error.response ? ctx.json({
-                    error: error.response.errors[0].message
-                }) : ctx.json({
-                    error: error.message
-                });
+            switch (error.message) {
+                case "Wrong flag": {
+                    return ctx.json({
+                        status: 403,
+                        error: error.message
+                    });
+                }
+                case "User not in team": {
+                    return ctx.json({
+                        status: 401,
+                        error: error.message
+                    });
+                }
+                case "Failed to find challenge": {
+                    return ctx.json({
+                        status: 404,
+                        error: error.message
+                    });
+                }
+                case "Invalid request body": {
+                    return ctx.json({
+                        status: 400,
+                        error: error.message
+                    });
+                }
+                case "Already solved": {
+                    return ctx.json({
+                        status: 304,
+                        error: error.message
+                    });
+                }
+                default: {
+                    return ctx.json({
+                        status: 500,
+                        error: error.message
+                    });
+                }
+            }
         }
     };
 }
