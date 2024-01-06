@@ -64,10 +64,19 @@ export class ChallengeController extends ChallengeService {
             });
         }
         catch (error: any) {
-            return ctx.json({
-                status: 500,
-                error: error.message
-            });
+            // eslint-disable-next-line unicorn/prefer-ternary
+            if (error.message === "No data found") {
+                return ctx.json({
+                    status: 404,
+                    error: error.message
+                });
+            } else {
+                return ctx.json({
+                    status: 500,
+                    error: error.message
+                });
+            
+            }
         }
     };
 
