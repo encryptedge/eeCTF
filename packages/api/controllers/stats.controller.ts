@@ -15,10 +15,10 @@ export class StatsControtoller extends StatsService {
         catch (error: any) {
             return error.message === "No team scores found" ? ctx.json({
                     status: 404,
-                    error: error.message
+                    message: error.message
                 }, 404) : ctx.json({
                     status: 500,
-                    error: error.message
+                    message: error.message
                 }, 500);
         }
     };
@@ -34,10 +34,10 @@ export class StatsControtoller extends StatsService {
         catch (error: any) {
             return error.message === "No team scores found" ? ctx.json({
                     status: 404,
-                    error: error.message
+                    message: error.message
                 }, 404) : ctx.json({
                     status: 500,
-                    error: error.message
+                    message: error.message
                 }, 500);
         }
     };
