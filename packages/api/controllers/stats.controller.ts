@@ -7,24 +7,38 @@ export class StatsControtoller extends StatsService {
         try {
             const teamId = ctx.get("team_id");
             const data = await this.getTeamScoreS(teamId);
-            return ctx.json(data);
+            return ctx.json({
+                status: 200,
+                message: data
+            });
         }
         catch (error: any) {
-            return ctx.json({
-                error: error.message
-            });
+            return error.message === "No team scores found" ? ctx.json({
+                    status: 404,
+                    message: error.message
+                }, 404) : ctx.json({
+                    status: 500,
+                    message: error.message
+                }, 500);
         }
     };
 
     public getAllTeamsScore = async (ctx: Context) => {
         try {
             const data = await this.getAllTeamScoreS();
-            return ctx.json(data);
+            return ctx.json({
+                status: 200,
+                message: data
+            });
         }
         catch (error: any) {
-            return ctx.json({
-                error: error.message
-            });
+            return error.message === "No team scores found" ? ctx.json({
+                    status: 404,
+                    message: error.message
+                }, 404) : ctx.json({
+                    status: 500,
+                    message: error.message
+                }, 500);
         }
     };
 }
