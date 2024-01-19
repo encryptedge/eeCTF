@@ -18,7 +18,7 @@ export class StatsControtoller extends StatsService {
                     message: error.message
                 }, 404) : ctx.json({
                     status: 500,
-                    message: error.message
+                    message: "Something went wrong, come to us :)"
                 }, 500);
         }
     };
@@ -37,7 +37,7 @@ export class StatsControtoller extends StatsService {
                     message: error.message
                 }, 404) : ctx.json({
                     status: 500,
-                    message: error.message
+                    message: "Something went wrong, come to us :)"
                 }, 500);
         }
     };

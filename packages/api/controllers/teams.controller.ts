@@ -13,9 +13,11 @@ export class TeamController extends TeamService {
             });
         }
         catch (error: any) {
+            // log it
+            console.log(error.message);
             return ctx.json({
                 status: 500,
-                message: error.message
+                message: "Something went wrong, come to us :)"
             }, 500);
         }
     };
@@ -30,7 +32,7 @@ export class TeamController extends TeamService {
             });
         }
         catch (error: any) {
-            return error.message === "Team not found" ? ctx.json({status: 404, message: error.message}, 404) : ctx.json({status: 500, message: error.message}, 500);
+            return error.message === "Team not found" ? ctx.json({status: 404, message: error.message}, 404) : ctx.json({status: 500, message: "Something went wrong, come to us :)"}, 500);
         }
     };
 
@@ -51,7 +53,7 @@ export class TeamController extends TeamService {
             switch (error.message) {
                 case "Invalid join code": { return ctx.json({ status: 400, message: error.message }, 400); }
                 case "Team is full": { return ctx.json({ status: 403, message: error.message }, 403); }
-                default: { return ctx.json({ status: 500, message: error.message }, 500); }
+                default: { return ctx.json({ status: 500, message: "Something went wrong, come to us :)" }, 500); }
             }
         }
     };
@@ -74,10 +76,10 @@ export class TeamController extends TeamService {
             const data = await this.whomaiS(userTeamID);
             return ctx.json({ status: 200, message: data });
         }
-        catch (error: any) {
+        catch {
             return ctx.json({
                 status: 500,
-                message: error.message
+                message: "Something went wrong, come to us :)"
             }, 500);
         }
     };
@@ -110,10 +112,7 @@ export class TeamController extends TeamService {
             return ctx.json({ status: 200, message: data });
         }
         catch (error: any) {
-            return ctx.json({
-                status: 500,
-                message: error.message
-            }, 500);
+                return error.message === "Invalid request" ? ctx.json({status: 400, message: "Bad request"}, 400) : ctx.json({status: 500, message: "Something went wrong, come to us :)"}, 500);
         }
     };
 }

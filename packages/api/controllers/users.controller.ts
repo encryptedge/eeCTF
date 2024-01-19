@@ -18,10 +18,10 @@ export class UserController extends UserService {
         try {
             const reqBody = await ctx.req.json();
             const data = await this.verifyUserS(reqBody);
-            return ctx.json({ status: 200, message: data });
+            return ctx.json({ status: 200, message: data.message });
         }
         catch (error: any) {
-            return error.message === "Invalid OTP" ? ctx.json({status: 401, message: error.message}, 401) : ctx.json({status: 500, message: error.message}, 500);
+            return error.message === "Invalid OTP" ? ctx.json({status: 401, message: error.message}, 401) : ctx.json({status: 500, message: "Something went wrong. Come to us :)"}, 500);
         }
     };
 
@@ -35,7 +35,7 @@ export class UserController extends UserService {
             switch (error.message) {
                 case "Invalid credentials": { return ctx.json({ status: 401, message: error.message }, 401); }
                 case "Email not verified": { return ctx.json({ status: 403, message: error.message }, 403); }
-                default: { return ctx.json({ status: 500, message: error.message }, 500); }
+                default: { return ctx.json({ status: 500, message: "Something went wrong. Come to us:)"}, 500); }
             }
         }
     };
@@ -46,7 +46,7 @@ export class UserController extends UserService {
             return ctx.json({ status: 200, message: data }, 200);
         }
         catch (error: any) {
-            return error.message === "User not found" ? ctx.json({status: 404, message: error.message}, 404) : ctx.json({status: 500, message: error.message}, 500);
+            return error.message === "User not found" ? ctx.json({status: 404, message: error.message}, 404) : ctx.json({status: 500, message: "Something went wrong. Come to us :)"}, 500);
         }
     };
 }
