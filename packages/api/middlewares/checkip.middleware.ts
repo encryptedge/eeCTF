@@ -1,5 +1,5 @@
 import { Context, Next } from "hono";
-import { cache_client } from "../extras/cache";
+// import { cache_client } from "../extras/cache";
 
 export class CheckIPMiddleware {
     public checkIP = async (ctx: Context, next: Next) => {
