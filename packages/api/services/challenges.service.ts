@@ -277,6 +277,7 @@ export class ChallengeService {
                               point
                               description
                           }
+                          depends_on
                       }
 
                       scores(where: {
@@ -305,7 +306,17 @@ export class ChallengeService {
                     team_id
                 });
 
+                let total_machines_progress : {
+                    [key: string]: number;
+                }= {};
+
                 if(data.machines && data.scores) {
+                    for (const machine of data.machines) {
+                        total_machines_progress = {
+                            ...total_machines_progress,
+                            [machine.id]: machine.challenges.length,
+                        };
+                    }
                     const challengeCollection : IParedMachineProgress[] = [];
 
                     for(const machine of data.machines) {
@@ -313,7 +324,9 @@ export class ChallengeService {
                             id: machine.id,
                             name: machine.name,
                             description: machine.description,
-                            challenges: []
+                            challenges: [],
+                            total_challenges: total_machines_progress[machine.id],
+                            depends_on: machine.depends_on ?? '',
                         };
 
                         for(const challenge of machine.challenges) {
@@ -322,7 +335,7 @@ export class ChallengeService {
                                 name: challenge.name,
                                 point: challenge.point,
                                 description: challenge.description,
-                                solved: false
+                                solved: false,
                             };
 
                             for(const score of data.scores) {
@@ -334,7 +347,6 @@ export class ChallengeService {
 
                             machineProgress.challenges?.push(challengeProgress);
                         }
-
                         challengeCollection.push(machineProgress);
                     }
                     
@@ -350,6 +362,18 @@ export class ChallengeService {
                         }
                         else {
                             machine.challenges = [machine.challenges![0]];
+                        }
+                    }
+
+                    // Check if all the challenges in depends_on machine are solved, if not then dont push to challengeCollection
+                    for (const machine of challengeCollection) {
+                        if(machine.depends_on) {
+                            const depends_on_machine = challengeCollection.find(challenge => challenge.id === machine.depends_on);
+                            if(depends_on_machine) {
+                                if(depends_on_machine.challenges?.length !== depends_on_machine.total_challenges) {
+                                    challengeCollection.splice(challengeCollection.indexOf(machine), 1);
+                                }
+                            }
                         }
                     }
 

@@ -13,6 +13,7 @@ import { secureHeaders } from "hono/secure-headers";
 import "./config/env";
 
 import { hgqlInit } from "./helpers/gqlClient";
+import {  CheckIPMiddleware } from "./middlewares/checkip.middleware";
 import { routes } from "./routes";
 
 const app = new Hono();
@@ -36,6 +37,7 @@ app.use("*", prettyJSON(
         space: 4,
     }
 ));
+app.use("*", new CheckIPMiddleware().checkIP);
 
 app.route("/", routes);
 
