@@ -99,13 +99,13 @@ input String_comparison_exp {
 """Bans issued to users"""
 type bans {
   created_at: timestamptz!
-  id: bigint!
+  id: String!
   ip: String!
   updated_at: timestamptz!
 
   """An object relationship"""
   user: users!
-  user_id: bigint!
+  user_id: String!
 }
 
 """
@@ -131,34 +131,18 @@ input bans_aggregate_bool_exp_count {
 aggregate fields of "bans"
 """
 type bans_aggregate_fields {
-  avg: bans_avg_fields
   count(columns: [bans_select_column!], distinct: Boolean): Int!
   max: bans_max_fields
   min: bans_min_fields
-  stddev: bans_stddev_fields
-  stddev_pop: bans_stddev_pop_fields
-  stddev_samp: bans_stddev_samp_fields
-  sum: bans_sum_fields
-  var_pop: bans_var_pop_fields
-  var_samp: bans_var_samp_fields
-  variance: bans_variance_fields
 }
 
 """
 order by aggregate values of table "bans"
 """
 input bans_aggregate_order_by {
-  avg: bans_avg_order_by
   count: order_by
   max: bans_max_order_by
   min: bans_min_order_by
-  stddev: bans_stddev_order_by
-  stddev_pop: bans_stddev_pop_order_by
-  stddev_samp: bans_stddev_samp_order_by
-  sum: bans_sum_order_by
-  var_pop: bans_var_pop_order_by
-  var_samp: bans_var_samp_order_by
-  variance: bans_variance_order_by
 }
 
 """
@@ -171,20 +155,6 @@ input bans_arr_rel_insert_input {
   on_conflict: bans_on_conflict
 }
 
-"""aggregate avg on columns"""
-type bans_avg_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by avg() on columns of table "bans"
-"""
-input bans_avg_order_by {
-  id: order_by
-  user_id: order_by
-}
-
 """
 Boolean expression to filter rows from the table "bans". All fields are combined with a logical 'AND'.
 """
@@ -193,11 +163,11 @@ input bans_bool_exp {
   _not: bans_bool_exp
   _or: [bans_bool_exp!]
   created_at: timestamptz_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   ip: String_comparison_exp
   updated_at: timestamptz_comparison_exp
   user: users_bool_exp
-  user_id: bigint_comparison_exp
+  user_id: String_comparison_exp
 }
 
 """
@@ -211,32 +181,24 @@ enum bans_constraint {
 }
 
 """
-input type for incrementing numeric columns in table "bans"
-"""
-input bans_inc_input {
-  id: bigint
-  user_id: bigint
-}
-
-"""
 input type for inserting data into table "bans"
 """
 input bans_insert_input {
   created_at: timestamptz
-  id: bigint
+  id: String
   ip: String
   updated_at: timestamptz
   user: users_obj_rel_insert_input
-  user_id: bigint
+  user_id: String
 }
 
 """aggregate max on columns"""
 type bans_max_fields {
   created_at: timestamptz
-  id: bigint
+  id: String
   ip: String
   updated_at: timestamptz
-  user_id: bigint
+  user_id: String
 }
 
 """
@@ -253,10 +215,10 @@ input bans_max_order_by {
 """aggregate min on columns"""
 type bans_min_fields {
   created_at: timestamptz
-  id: bigint
+  id: String
   ip: String
   updated_at: timestamptz
-  user_id: bigint
+  user_id: String
 }
 
 """
@@ -302,7 +264,7 @@ input bans_order_by {
 
 """primary key columns input for table: bans"""
 input bans_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -330,52 +292,10 @@ input type for updating data in table "bans"
 """
 input bans_set_input {
   created_at: timestamptz
-  id: bigint
+  id: String
   ip: String
   updated_at: timestamptz
-  user_id: bigint
-}
-
-"""aggregate stddev on columns"""
-type bans_stddev_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by stddev() on columns of table "bans"
-"""
-input bans_stddev_order_by {
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type bans_stddev_pop_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "bans"
-"""
-input bans_stddev_pop_order_by {
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type bans_stddev_samp_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "bans"
-"""
-input bans_stddev_samp_order_by {
-  id: order_by
-  user_id: order_by
+  user_id: String
 }
 
 """
@@ -392,24 +312,10 @@ input bans_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input bans_stream_cursor_value_input {
   created_at: timestamptz
-  id: bigint
+  id: String
   ip: String
   updated_at: timestamptz
-  user_id: bigint
-}
-
-"""aggregate sum on columns"""
-type bans_sum_fields {
-  id: bigint
-  user_id: bigint
-}
-
-"""
-order by sum() on columns of table "bans"
-"""
-input bans_sum_order_by {
-  id: order_by
-  user_id: order_by
+  user_id: String
 }
 
 """
@@ -433,9 +339,6 @@ enum bans_update_column {
 }
 
 input bans_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: bans_inc_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: bans_set_input
 
@@ -443,75 +346,16 @@ input bans_updates {
   where: bans_bool_exp!
 }
 
-"""aggregate var_pop on columns"""
-type bans_var_pop_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by var_pop() on columns of table "bans"
-"""
-input bans_var_pop_order_by {
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate var_samp on columns"""
-type bans_var_samp_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by var_samp() on columns of table "bans"
-"""
-input bans_var_samp_order_by {
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate variance on columns"""
-type bans_variance_fields {
-  id: Float
-  user_id: Float
-}
-
-"""
-order by variance() on columns of table "bans"
-"""
-input bans_variance_order_by {
-  id: order_by
-  user_id: order_by
-}
-
-scalar bigint
-
-"""
-Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'.
-"""
-input bigint_comparison_exp {
-  _eq: bigint
-  _gt: bigint
-  _gte: bigint
-  _in: [bigint!]
-  _is_null: Boolean
-  _lt: bigint
-  _lte: bigint
-  _neq: bigint
-  _nin: [bigint!]
-}
-
 """Challenges Data"""
 type challenges {
   created_at: timestamptz!
   description: String!
   flag: String!
-  id: bigint!
+  id: String!
 
   """An object relationship"""
   machine: machines!
-  machine_id: bigint!
+  machine_id: String!
   name: String!
   point: Int!
 
@@ -655,8 +499,6 @@ input challenges_arr_rel_insert_input {
 
 """aggregate avg on columns"""
 type challenges_avg_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -665,8 +507,6 @@ type challenges_avg_fields {
 order by avg() on columns of table "challenges"
 """
 input challenges_avg_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
@@ -681,9 +521,9 @@ input challenges_bool_exp {
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
   flag: String_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   machine: machines_bool_exp
-  machine_id: bigint_comparison_exp
+  machine_id: String_comparison_exp
   name: String_comparison_exp
   point: Int_comparison_exp
   scores: scores_bool_exp
@@ -718,8 +558,6 @@ enum challenges_constraint {
 input type for incrementing numeric columns in table "challenges"
 """
 input challenges_inc_input {
-  id: bigint
-  machine_id: bigint
   point: Int
   stage: Int
 }
@@ -731,9 +569,9 @@ input challenges_insert_input {
   created_at: timestamptz
   description: String
   flag: String
-  id: bigint
+  id: String
   machine: machines_obj_rel_insert_input
-  machine_id: bigint
+  machine_id: String
   name: String
   point: Int
   scores: scores_arr_rel_insert_input
@@ -747,8 +585,8 @@ type challenges_max_fields {
   created_at: timestamptz
   description: String
   flag: String
-  id: bigint
-  machine_id: bigint
+  id: String
+  machine_id: String
   name: String
   point: Int
   stage: Int
@@ -775,8 +613,8 @@ type challenges_min_fields {
   created_at: timestamptz
   description: String
   flag: String
-  id: bigint
-  machine_id: bigint
+  id: String
+  machine_id: String
   name: String
   point: Int
   stage: Int
@@ -846,7 +684,7 @@ input challenges_order_by {
 
 """primary key columns input for table: challenges"""
 input challenges_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -888,8 +726,8 @@ input challenges_set_input {
   created_at: timestamptz
   description: String
   flag: String
-  id: bigint
-  machine_id: bigint
+  id: String
+  machine_id: String
   name: String
   point: Int
   stage: Int
@@ -898,8 +736,6 @@ input challenges_set_input {
 
 """aggregate stddev on columns"""
 type challenges_stddev_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -908,16 +744,12 @@ type challenges_stddev_fields {
 order by stddev() on columns of table "challenges"
 """
 input challenges_stddev_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type challenges_stddev_pop_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -926,16 +758,12 @@ type challenges_stddev_pop_fields {
 order by stddev_pop() on columns of table "challenges"
 """
 input challenges_stddev_pop_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type challenges_stddev_samp_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -944,8 +772,6 @@ type challenges_stddev_samp_fields {
 order by stddev_samp() on columns of table "challenges"
 """
 input challenges_stddev_samp_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
@@ -966,8 +792,8 @@ input challenges_stream_cursor_value_input {
   created_at: timestamptz
   description: String
   flag: String
-  id: bigint
-  machine_id: bigint
+  id: String
+  machine_id: String
   name: String
   point: Int
   stage: Int
@@ -976,8 +802,6 @@ input challenges_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type challenges_sum_fields {
-  id: bigint
-  machine_id: bigint
   point: Int
   stage: Int
 }
@@ -986,8 +810,6 @@ type challenges_sum_fields {
 order by sum() on columns of table "challenges"
 """
 input challenges_sum_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
@@ -1037,8 +859,6 @@ input challenges_updates {
 
 """aggregate var_pop on columns"""
 type challenges_var_pop_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -1047,16 +867,12 @@ type challenges_var_pop_fields {
 order by var_pop() on columns of table "challenges"
 """
 input challenges_var_pop_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
 
 """aggregate var_samp on columns"""
 type challenges_var_samp_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -1065,16 +881,12 @@ type challenges_var_samp_fields {
 order by var_samp() on columns of table "challenges"
 """
 input challenges_var_samp_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
 
 """aggregate variance on columns"""
 type challenges_variance_fields {
-  id: Float
-  machine_id: Float
   point: Float
   stage: Float
 }
@@ -1083,8 +895,6 @@ type challenges_variance_fields {
 order by variance() on columns of table "challenges"
 """
 input challenges_variance_order_by {
-  id: order_by
-  machine_id: order_by
   point: order_by
   stage: order_by
 }
@@ -1137,8 +947,9 @@ type machines {
   ): challenges_aggregate!
   created_at: timestamptz!
   created_by: String!
+  depends_on: String
   description: String!
-  id: bigint!
+  id: String!
   name: String!
   no_of_solves: Int!
   tags: String!
@@ -1172,7 +983,6 @@ type machines_aggregate_fields {
 
 """aggregate avg on columns"""
 type machines_avg_fields {
-  id: Float
   no_of_solves: Float
 }
 
@@ -1187,8 +997,9 @@ input machines_bool_exp {
   challenges_aggregate: challenges_aggregate_bool_exp
   created_at: timestamptz_comparison_exp
   created_by: String_comparison_exp
+  depends_on: String_comparison_exp
   description: String_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   name: String_comparison_exp
   no_of_solves: Int_comparison_exp
   tags: String_comparison_exp
@@ -1214,7 +1025,6 @@ enum machines_constraint {
 input type for incrementing numeric columns in table "machines"
 """
 input machines_inc_input {
-  id: bigint
   no_of_solves: Int
 }
 
@@ -1225,8 +1035,9 @@ input machines_insert_input {
   challenges: challenges_arr_rel_insert_input
   created_at: timestamptz
   created_by: String
+  depends_on: String
   description: String
-  id: bigint
+  id: String
   name: String
   no_of_solves: Int
   tags: String
@@ -1237,8 +1048,9 @@ input machines_insert_input {
 type machines_max_fields {
   created_at: timestamptz
   created_by: String
+  depends_on: String
   description: String
-  id: bigint
+  id: String
   name: String
   no_of_solves: Int
   tags: String
@@ -1249,8 +1061,9 @@ type machines_max_fields {
 type machines_min_fields {
   created_at: timestamptz
   created_by: String
+  depends_on: String
   description: String
-  id: bigint
+  id: String
   name: String
   no_of_solves: Int
   tags: String
@@ -1292,6 +1105,7 @@ input machines_order_by {
   challenges_aggregate: challenges_aggregate_order_by
   created_at: order_by
   created_by: order_by
+  depends_on: order_by
   description: order_by
   id: order_by
   name: order_by
@@ -1302,7 +1116,7 @@ input machines_order_by {
 
 """primary key columns input for table: machines"""
 input machines_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -1314,6 +1128,9 @@ enum machines_select_column {
 
   """column name"""
   created_by
+
+  """column name"""
+  depends_on
 
   """column name"""
   description
@@ -1340,8 +1157,9 @@ input type for updating data in table "machines"
 input machines_set_input {
   created_at: timestamptz
   created_by: String
+  depends_on: String
   description: String
-  id: bigint
+  id: String
   name: String
   no_of_solves: Int
   tags: String
@@ -1350,19 +1168,16 @@ input machines_set_input {
 
 """aggregate stddev on columns"""
 type machines_stddev_fields {
-  id: Float
   no_of_solves: Float
 }
 
 """aggregate stddev_pop on columns"""
 type machines_stddev_pop_fields {
-  id: Float
   no_of_solves: Float
 }
 
 """aggregate stddev_samp on columns"""
 type machines_stddev_samp_fields {
-  id: Float
   no_of_solves: Float
 }
 
@@ -1381,8 +1196,9 @@ input machines_stream_cursor_input {
 input machines_stream_cursor_value_input {
   created_at: timestamptz
   created_by: String
+  depends_on: String
   description: String
-  id: bigint
+  id: String
   name: String
   no_of_solves: Int
   tags: String
@@ -1391,7 +1207,6 @@ input machines_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type machines_sum_fields {
-  id: bigint
   no_of_solves: Int
 }
 
@@ -1404,6 +1219,9 @@ enum machines_update_column {
 
   """column name"""
   created_by
+
+  """column name"""
+  depends_on
 
   """column name"""
   description
@@ -1437,19 +1255,16 @@ input machines_updates {
 
 """aggregate var_pop on columns"""
 type machines_var_pop_fields {
-  id: Float
   no_of_solves: Float
 }
 
 """aggregate var_samp on columns"""
 type machines_var_samp_fields {
-  id: Float
   no_of_solves: Float
 }
 
 """aggregate variance on columns"""
 type machines_variance_fields {
-  id: Float
   no_of_solves: Float
 }
 
@@ -1466,7 +1281,7 @@ type mutation_root {
   """
   delete single row from the table: "bans"
   """
-  delete_bans_by_pk(id: bigint!): bans
+  delete_bans_by_pk(id: String!): bans
 
   """
   delete data from the table: "challenges"
@@ -1479,7 +1294,7 @@ type mutation_root {
   """
   delete single row from the table: "challenges"
   """
-  delete_challenges_by_pk(id: bigint!): challenges
+  delete_challenges_by_pk(id: String!): challenges
 
   """
   delete data from the table: "machines"
@@ -1492,7 +1307,7 @@ type mutation_root {
   """
   delete single row from the table: "machines"
   """
-  delete_machines_by_pk(id: bigint!): machines
+  delete_machines_by_pk(id: String!): machines
 
   """
   delete data from the table: "scores"
@@ -1505,7 +1320,7 @@ type mutation_root {
   """
   delete single row from the table: "scores"
   """
-  delete_scores_by_pk(id: bigint!): scores
+  delete_scores_by_pk(id: String!): scores
 
   """
   delete data from the table: "submissions"
@@ -1518,7 +1333,7 @@ type mutation_root {
   """
   delete single row from the table: "submissions"
   """
-  delete_submissions_by_pk(id: bigint!): submissions
+  delete_submissions_by_pk(id: String!): submissions
 
   """
   delete data from the table: "teams"
@@ -1531,7 +1346,7 @@ type mutation_root {
   """
   delete single row from the table: "teams"
   """
-  delete_teams_by_pk(id: bigint!): teams
+  delete_teams_by_pk(id: String!): teams
 
   """
   delete data from the table: "users"
@@ -1544,7 +1359,7 @@ type mutation_root {
   """
   delete single row from the table: "users"
   """
-  delete_users_by_pk(id: bigint!): users
+  delete_users_by_pk(id: String!): users
 
   """
   insert data into the table: "bans"
@@ -1704,9 +1519,6 @@ type mutation_root {
   update data of the table: "bans"
   """
   update_bans(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: bans_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: bans_set_input
 
@@ -1718,9 +1530,6 @@ type mutation_root {
   update single row of the table: "bans"
   """
   update_bans_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: bans_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: bans_set_input
     pk_columns: bans_pk_columns_input!
@@ -1806,9 +1615,6 @@ type mutation_root {
   update data of the table: "scores"
   """
   update_scores(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: scores_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: scores_set_input
 
@@ -1820,9 +1626,6 @@ type mutation_root {
   update single row of the table: "scores"
   """
   update_scores_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: scores_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: scores_set_input
     pk_columns: scores_pk_columns_input!
@@ -1840,9 +1643,6 @@ type mutation_root {
   update data of the table: "submissions"
   """
   update_submissions(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: submissions_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: submissions_set_input
 
@@ -1854,9 +1654,6 @@ type mutation_root {
   update single row of the table: "submissions"
   """
   update_submissions_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: submissions_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: submissions_set_input
     pk_columns: submissions_pk_columns_input!
@@ -1874,9 +1671,6 @@ type mutation_root {
   update data of the table: "teams"
   """
   update_teams(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: teams_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: teams_set_input
 
@@ -1888,9 +1682,6 @@ type mutation_root {
   update single row of the table: "teams"
   """
   update_teams_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: teams_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: teams_set_input
     pk_columns: teams_pk_columns_input!
@@ -1908,9 +1699,6 @@ type mutation_root {
   update data of the table: "users"
   """
   update_users(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: users_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: users_set_input
 
@@ -1922,9 +1710,6 @@ type mutation_root {
   update single row of the table: "users"
   """
   update_users_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: users_inc_input
-
     """sets the columns of the filtered rows to the given values"""
     _set: users_set_input
     pk_columns: users_pk_columns_input!
@@ -1998,7 +1783,7 @@ type query_root {
   ): bans_aggregate!
 
   """fetch data from the table: "bans" using primary key columns"""
-  bans_by_pk(id: bigint!): bans
+  bans_by_pk(id: String!): bans
 
   """An array relationship"""
   challenges(
@@ -2037,7 +1822,7 @@ type query_root {
   ): challenges_aggregate!
 
   """fetch data from the table: "challenges" using primary key columns"""
-  challenges_by_pk(id: bigint!): challenges
+  challenges_by_pk(id: String!): challenges
 
   """
   fetch data from the table: "machines"
@@ -2080,7 +1865,7 @@ type query_root {
   ): machines_aggregate!
 
   """fetch data from the table: "machines" using primary key columns"""
-  machines_by_pk(id: bigint!): machines
+  machines_by_pk(id: String!): machines
 
   """An array relationship"""
   scores(
@@ -2119,7 +1904,7 @@ type query_root {
   ): scores_aggregate!
 
   """fetch data from the table: "scores" using primary key columns"""
-  scores_by_pk(id: bigint!): scores
+  scores_by_pk(id: String!): scores
 
   """An array relationship"""
   submissions(
@@ -2158,7 +1943,7 @@ type query_root {
   ): submissions_aggregate!
 
   """fetch data from the table: "submissions" using primary key columns"""
-  submissions_by_pk(id: bigint!): submissions
+  submissions_by_pk(id: String!): submissions
 
   """
   fetch data from the table: "teams"
@@ -2201,7 +1986,7 @@ type query_root {
   ): teams_aggregate!
 
   """fetch data from the table: "teams" using primary key columns"""
-  teams_by_pk(id: bigint!): teams
+  teams_by_pk(id: String!): teams
 
   """An array relationship"""
   users(
@@ -2240,29 +2025,29 @@ type query_root {
   ): users_aggregate!
 
   """fetch data from the table: "users" using primary key columns"""
-  users_by_pk(id: bigint!): users
+  users_by_pk(id: String!): users
 }
 
 """Scoreboard Data"""
 type scores {
   """An object relationship"""
   challenge: challenges!
-  challenge_id: bigint!
+  challenge_id: String!
   created_at: timestamptz!
-  id: bigint!
+  id: String!
 
   """An object relationship"""
   submission: submissions!
-  submission_id: bigint!
+  submission_id: String!
 
   """An object relationship"""
   team: teams!
-  team_id: bigint!
+  team_id: String!
   updated_at: timestamptz!
 
   """An object relationship"""
   user: users!
-  user_id: bigint!
+  user_id: String!
 }
 
 """
@@ -2288,34 +2073,18 @@ input scores_aggregate_bool_exp_count {
 aggregate fields of "scores"
 """
 type scores_aggregate_fields {
-  avg: scores_avg_fields
   count(columns: [scores_select_column!], distinct: Boolean): Int!
   max: scores_max_fields
   min: scores_min_fields
-  stddev: scores_stddev_fields
-  stddev_pop: scores_stddev_pop_fields
-  stddev_samp: scores_stddev_samp_fields
-  sum: scores_sum_fields
-  var_pop: scores_var_pop_fields
-  var_samp: scores_var_samp_fields
-  variance: scores_variance_fields
 }
 
 """
 order by aggregate values of table "scores"
 """
 input scores_aggregate_order_by {
-  avg: scores_avg_order_by
   count: order_by
   max: scores_max_order_by
   min: scores_min_order_by
-  stddev: scores_stddev_order_by
-  stddev_pop: scores_stddev_pop_order_by
-  stddev_samp: scores_stddev_samp_order_by
-  sum: scores_sum_order_by
-  var_pop: scores_var_pop_order_by
-  var_samp: scores_var_samp_order_by
-  variance: scores_variance_order_by
 }
 
 """
@@ -2328,26 +2097,6 @@ input scores_arr_rel_insert_input {
   on_conflict: scores_on_conflict
 }
 
-"""aggregate avg on columns"""
-type scores_avg_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by avg() on columns of table "scores"
-"""
-input scores_avg_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
-}
-
 """
 Boolean expression to filter rows from the table "scores". All fields are combined with a logical 'AND'.
 """
@@ -2356,16 +2105,16 @@ input scores_bool_exp {
   _not: scores_bool_exp
   _or: [scores_bool_exp!]
   challenge: challenges_bool_exp
-  challenge_id: bigint_comparison_exp
+  challenge_id: String_comparison_exp
   created_at: timestamptz_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   submission: submissions_bool_exp
-  submission_id: bigint_comparison_exp
+  submission_id: String_comparison_exp
   team: teams_bool_exp
-  team_id: bigint_comparison_exp
+  team_id: String_comparison_exp
   updated_at: timestamptz_comparison_exp
   user: users_bool_exp
-  user_id: bigint_comparison_exp
+  user_id: String_comparison_exp
 }
 
 """
@@ -2384,42 +2133,31 @@ enum scores_constraint {
 }
 
 """
-input type for incrementing numeric columns in table "scores"
-"""
-input scores_inc_input {
-  challenge_id: bigint
-  id: bigint
-  submission_id: bigint
-  team_id: bigint
-  user_id: bigint
-}
-
-"""
 input type for inserting data into table "scores"
 """
 input scores_insert_input {
   challenge: challenges_obj_rel_insert_input
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
+  id: String
   submission: submissions_obj_rel_insert_input
-  submission_id: bigint
+  submission_id: String
   team: teams_obj_rel_insert_input
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz
   user: users_obj_rel_insert_input
-  user_id: bigint
+  user_id: String
 }
 
 """aggregate max on columns"""
 type scores_max_fields {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
-  submission_id: bigint
-  team_id: bigint
+  id: String
+  submission_id: String
+  team_id: String
   updated_at: timestamptz
-  user_id: bigint
+  user_id: String
 }
 
 """
@@ -2437,13 +2175,13 @@ input scores_max_order_by {
 
 """aggregate min on columns"""
 type scores_min_fields {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
-  submission_id: bigint
-  team_id: bigint
+  id: String
+  submission_id: String
+  team_id: String
   updated_at: timestamptz
-  user_id: bigint
+  user_id: String
 }
 
 """
@@ -2506,7 +2244,7 @@ input scores_order_by {
 
 """primary key columns input for table: scores"""
 input scores_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -2539,73 +2277,13 @@ enum scores_select_column {
 input type for updating data in table "scores"
 """
 input scores_set_input {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
-  submission_id: bigint
-  team_id: bigint
+  id: String
+  submission_id: String
+  team_id: String
   updated_at: timestamptz
-  user_id: bigint
-}
-
-"""aggregate stddev on columns"""
-type scores_stddev_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by stddev() on columns of table "scores"
-"""
-input scores_stddev_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type scores_stddev_pop_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "scores"
-"""
-input scores_stddev_pop_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type scores_stddev_samp_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "scores"
-"""
-input scores_stddev_samp_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
+  user_id: String
 }
 
 """
@@ -2621,33 +2299,13 @@ input scores_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input scores_stream_cursor_value_input {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
-  submission_id: bigint
-  team_id: bigint
+  id: String
+  submission_id: String
+  team_id: String
   updated_at: timestamptz
-  user_id: bigint
-}
-
-"""aggregate sum on columns"""
-type scores_sum_fields {
-  challenge_id: bigint
-  id: bigint
-  submission_id: bigint
-  team_id: bigint
-  user_id: bigint
-}
-
-"""
-order by sum() on columns of table "scores"
-"""
-input scores_sum_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
+  user_id: String
 }
 
 """
@@ -2677,9 +2335,6 @@ enum scores_update_column {
 }
 
 input scores_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: scores_inc_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: scores_set_input
 
@@ -2687,73 +2342,13 @@ input scores_updates {
   where: scores_bool_exp!
 }
 
-"""aggregate var_pop on columns"""
-type scores_var_pop_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by var_pop() on columns of table "scores"
-"""
-input scores_var_pop_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
-}
-
-"""aggregate var_samp on columns"""
-type scores_var_samp_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by var_samp() on columns of table "scores"
-"""
-input scores_var_samp_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
-}
-
-"""aggregate variance on columns"""
-type scores_variance_fields {
-  challenge_id: Float
-  id: Float
-  submission_id: Float
-  team_id: Float
-  user_id: Float
-}
-
-"""
-order by variance() on columns of table "scores"
-"""
-input scores_variance_order_by {
-  challenge_id: order_by
-  id: order_by
-  submission_id: order_by
-  team_id: order_by
-  user_id: order_by
-}
-
 """User flag submissions"""
 type submissions {
   """An object relationship"""
   challenge: challenges!
-  challenge_id: bigint!
+  challenge_id: String!
   created_at: timestamptz!
-  id: bigint!
+  id: String!
 
   """An object relationship"""
   score: scores
@@ -2762,7 +2357,7 @@ type submissions {
 
   """An object relationship"""
   user: users!
-  user_id: bigint!
+  user_id: String!
 }
 
 """
@@ -2788,34 +2383,18 @@ input submissions_aggregate_bool_exp_count {
 aggregate fields of "submissions"
 """
 type submissions_aggregate_fields {
-  avg: submissions_avg_fields
   count(columns: [submissions_select_column!], distinct: Boolean): Int!
   max: submissions_max_fields
   min: submissions_min_fields
-  stddev: submissions_stddev_fields
-  stddev_pop: submissions_stddev_pop_fields
-  stddev_samp: submissions_stddev_samp_fields
-  sum: submissions_sum_fields
-  var_pop: submissions_var_pop_fields
-  var_samp: submissions_var_samp_fields
-  variance: submissions_variance_fields
 }
 
 """
 order by aggregate values of table "submissions"
 """
 input submissions_aggregate_order_by {
-  avg: submissions_avg_order_by
   count: order_by
   max: submissions_max_order_by
   min: submissions_min_order_by
-  stddev: submissions_stddev_order_by
-  stddev_pop: submissions_stddev_pop_order_by
-  stddev_samp: submissions_stddev_samp_order_by
-  sum: submissions_sum_order_by
-  var_pop: submissions_var_pop_order_by
-  var_samp: submissions_var_samp_order_by
-  variance: submissions_variance_order_by
 }
 
 """
@@ -2828,22 +2407,6 @@ input submissions_arr_rel_insert_input {
   on_conflict: submissions_on_conflict
 }
 
-"""aggregate avg on columns"""
-type submissions_avg_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by avg() on columns of table "submissions"
-"""
-input submissions_avg_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
 """
 Boolean expression to filter rows from the table "submissions". All fields are combined with a logical 'AND'.
 """
@@ -2852,14 +2415,14 @@ input submissions_bool_exp {
   _not: submissions_bool_exp
   _or: [submissions_bool_exp!]
   challenge: challenges_bool_exp
-  challenge_id: bigint_comparison_exp
+  challenge_id: String_comparison_exp
   created_at: timestamptz_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   score: scores_bool_exp
   submited_flag: String_comparison_exp
   updated_at: timestamptz_comparison_exp
   user: users_bool_exp
-  user_id: bigint_comparison_exp
+  user_id: String_comparison_exp
 }
 
 """
@@ -2873,37 +2436,28 @@ enum submissions_constraint {
 }
 
 """
-input type for incrementing numeric columns in table "submissions"
-"""
-input submissions_inc_input {
-  challenge_id: bigint
-  id: bigint
-  user_id: bigint
-}
-
-"""
 input type for inserting data into table "submissions"
 """
 input submissions_insert_input {
   challenge: challenges_obj_rel_insert_input
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
+  id: String
   score: scores_obj_rel_insert_input
   submited_flag: String
   updated_at: timestamptz
   user: users_obj_rel_insert_input
-  user_id: bigint
+  user_id: String
 }
 
 """aggregate max on columns"""
 type submissions_max_fields {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
+  id: String
   submited_flag: String
   updated_at: timestamptz
-  user_id: bigint
+  user_id: String
 }
 
 """
@@ -2920,12 +2474,12 @@ input submissions_max_order_by {
 
 """aggregate min on columns"""
 type submissions_min_fields {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
+  id: String
   submited_flag: String
   updated_at: timestamptz
-  user_id: bigint
+  user_id: String
 }
 
 """
@@ -2985,7 +2539,7 @@ input submissions_order_by {
 
 """primary key columns input for table: submissions"""
 input submissions_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -3015,60 +2569,12 @@ enum submissions_select_column {
 input type for updating data in table "submissions"
 """
 input submissions_set_input {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
+  id: String
   submited_flag: String
   updated_at: timestamptz
-  user_id: bigint
-}
-
-"""aggregate stddev on columns"""
-type submissions_stddev_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by stddev() on columns of table "submissions"
-"""
-input submissions_stddev_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type submissions_stddev_pop_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "submissions"
-"""
-input submissions_stddev_pop_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type submissions_stddev_samp_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "submissions"
-"""
-input submissions_stddev_samp_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
+  user_id: String
 }
 
 """
@@ -3084,28 +2590,12 @@ input submissions_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input submissions_stream_cursor_value_input {
-  challenge_id: bigint
+  challenge_id: String
   created_at: timestamptz
-  id: bigint
+  id: String
   submited_flag: String
   updated_at: timestamptz
-  user_id: bigint
-}
-
-"""aggregate sum on columns"""
-type submissions_sum_fields {
-  challenge_id: bigint
-  id: bigint
-  user_id: bigint
-}
-
-"""
-order by sum() on columns of table "submissions"
-"""
-input submissions_sum_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
+  user_id: String
 }
 
 """
@@ -3132,62 +2622,11 @@ enum submissions_update_column {
 }
 
 input submissions_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: submissions_inc_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: submissions_set_input
 
   """filter the rows which have to be updated"""
   where: submissions_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type submissions_var_pop_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by var_pop() on columns of table "submissions"
-"""
-input submissions_var_pop_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate var_samp on columns"""
-type submissions_var_samp_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by var_samp() on columns of table "submissions"
-"""
-input submissions_var_samp_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
-"""aggregate variance on columns"""
-type submissions_variance_fields {
-  challenge_id: Float
-  id: Float
-  user_id: Float
-}
-
-"""
-order by variance() on columns of table "submissions"
-"""
-input submissions_variance_order_by {
-  challenge_id: order_by
-  id: order_by
-  user_id: order_by
 }
 
 type subscription_root {
@@ -3228,7 +2667,7 @@ type subscription_root {
   ): bans_aggregate!
 
   """fetch data from the table: "bans" using primary key columns"""
-  bans_by_pk(id: bigint!): bans
+  bans_by_pk(id: String!): bans
 
   """
   fetch data from the table in a streaming manner: "bans"
@@ -3281,7 +2720,7 @@ type subscription_root {
   ): challenges_aggregate!
 
   """fetch data from the table: "challenges" using primary key columns"""
-  challenges_by_pk(id: bigint!): challenges
+  challenges_by_pk(id: String!): challenges
 
   """
   fetch data from the table in a streaming manner: "challenges"
@@ -3338,7 +2777,7 @@ type subscription_root {
   ): machines_aggregate!
 
   """fetch data from the table: "machines" using primary key columns"""
-  machines_by_pk(id: bigint!): machines
+  machines_by_pk(id: String!): machines
 
   """
   fetch data from the table in a streaming manner: "machines"
@@ -3391,7 +2830,7 @@ type subscription_root {
   ): scores_aggregate!
 
   """fetch data from the table: "scores" using primary key columns"""
-  scores_by_pk(id: bigint!): scores
+  scores_by_pk(id: String!): scores
 
   """
   fetch data from the table in a streaming manner: "scores"
@@ -3444,7 +2883,7 @@ type subscription_root {
   ): submissions_aggregate!
 
   """fetch data from the table: "submissions" using primary key columns"""
-  submissions_by_pk(id: bigint!): submissions
+  submissions_by_pk(id: String!): submissions
 
   """
   fetch data from the table in a streaming manner: "submissions"
@@ -3501,7 +2940,7 @@ type subscription_root {
   ): teams_aggregate!
 
   """fetch data from the table: "teams" using primary key columns"""
-  teams_by_pk(id: bigint!): teams
+  teams_by_pk(id: String!): teams
 
   """
   fetch data from the table in a streaming manner: "teams"
@@ -3554,7 +2993,7 @@ type subscription_root {
   ): users_aggregate!
 
   """fetch data from the table: "users" using primary key columns"""
-  users_by_pk(id: bigint!): users
+  users_by_pk(id: String!): users
 
   """
   fetch data from the table in a streaming manner: "users"
@@ -3574,7 +3013,7 @@ type subscription_root {
 """Teams Data"""
 type teams {
   created_at: timestamptz!
-  id: bigint!
+  id: String!
   join_code: String!
   name: String!
 
@@ -3664,22 +3103,9 @@ type teams_aggregate {
 aggregate fields of "teams"
 """
 type teams_aggregate_fields {
-  avg: teams_avg_fields
   count(columns: [teams_select_column!], distinct: Boolean): Int!
   max: teams_max_fields
   min: teams_min_fields
-  stddev: teams_stddev_fields
-  stddev_pop: teams_stddev_pop_fields
-  stddev_samp: teams_stddev_samp_fields
-  sum: teams_sum_fields
-  var_pop: teams_var_pop_fields
-  var_samp: teams_var_samp_fields
-  variance: teams_variance_fields
-}
-
-"""aggregate avg on columns"""
-type teams_avg_fields {
-  id: Float
 }
 
 """
@@ -3690,7 +3116,7 @@ input teams_bool_exp {
   _not: teams_bool_exp
   _or: [teams_bool_exp!]
   created_at: timestamptz_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   join_code: String_comparison_exp
   name: String_comparison_exp
   scores: scores_bool_exp
@@ -3705,6 +3131,11 @@ unique or primary key constraints on table "teams"
 """
 enum teams_constraint {
   """
+  unique or primary key constraint on columns "join_code"
+  """
+  teams_join_code_key
+
+  """
   unique or primary key constraint on columns "name"
   """
   teams_name_key
@@ -3716,18 +3147,11 @@ enum teams_constraint {
 }
 
 """
-input type for incrementing numeric columns in table "teams"
-"""
-input teams_inc_input {
-  id: bigint
-}
-
-"""
 input type for inserting data into table "teams"
 """
 input teams_insert_input {
   created_at: timestamptz
-  id: bigint
+  id: String
   join_code: String
   name: String
   scores: scores_arr_rel_insert_input
@@ -3738,7 +3162,7 @@ input teams_insert_input {
 """aggregate max on columns"""
 type teams_max_fields {
   created_at: timestamptz
-  id: bigint
+  id: String
   join_code: String
   name: String
   updated_at: timestamptz
@@ -3747,7 +3171,7 @@ type teams_max_fields {
 """aggregate min on columns"""
 type teams_min_fields {
   created_at: timestamptz
-  id: bigint
+  id: String
   join_code: String
   name: String
   updated_at: timestamptz
@@ -3796,7 +3220,7 @@ input teams_order_by {
 
 """primary key columns input for table: teams"""
 input teams_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -3824,25 +3248,10 @@ input type for updating data in table "teams"
 """
 input teams_set_input {
   created_at: timestamptz
-  id: bigint
+  id: String
   join_code: String
   name: String
   updated_at: timestamptz
-}
-
-"""aggregate stddev on columns"""
-type teams_stddev_fields {
-  id: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type teams_stddev_pop_fields {
-  id: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type teams_stddev_samp_fields {
-  id: Float
 }
 
 """
@@ -3859,15 +3268,10 @@ input teams_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input teams_stream_cursor_value_input {
   created_at: timestamptz
-  id: bigint
+  id: String
   join_code: String
   name: String
   updated_at: timestamptz
-}
-
-"""aggregate sum on columns"""
-type teams_sum_fields {
-  id: bigint
 }
 
 """
@@ -3891,29 +3295,11 @@ enum teams_update_column {
 }
 
 input teams_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: teams_inc_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: teams_set_input
 
   """filter the rows which have to be updated"""
   where: teams_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type teams_var_pop_fields {
-  id: Float
-}
-
-"""aggregate var_samp on columns"""
-type teams_var_samp_fields {
-  id: Float
-}
-
-"""aggregate variance on columns"""
-type teams_variance_fields {
-  id: Float
 }
 
 scalar timestamptz
@@ -3975,8 +3361,9 @@ type users {
   email_verification_code: String!
   first_name: String!
   hash: String!
-  id: bigint!
+  id: String!
   is_admin: Boolean!
+  is_banned: Boolean!
   is_email_verified: Boolean!
   last_name: String!
   salt: String!
@@ -4055,7 +3442,7 @@ type users {
 
   """An object relationship"""
   team: teams
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz!
 }
 
@@ -4098,34 +3485,18 @@ input users_aggregate_bool_exp_count {
 aggregate fields of "users"
 """
 type users_aggregate_fields {
-  avg: users_avg_fields
   count(columns: [users_select_column!], distinct: Boolean): Int!
   max: users_max_fields
   min: users_min_fields
-  stddev: users_stddev_fields
-  stddev_pop: users_stddev_pop_fields
-  stddev_samp: users_stddev_samp_fields
-  sum: users_sum_fields
-  var_pop: users_var_pop_fields
-  var_samp: users_var_samp_fields
-  variance: users_variance_fields
 }
 
 """
 order by aggregate values of table "users"
 """
 input users_aggregate_order_by {
-  avg: users_avg_order_by
   count: order_by
   max: users_max_order_by
   min: users_min_order_by
-  stddev: users_stddev_order_by
-  stddev_pop: users_stddev_pop_order_by
-  stddev_samp: users_stddev_samp_order_by
-  sum: users_sum_order_by
-  var_pop: users_var_pop_order_by
-  var_samp: users_var_samp_order_by
-  variance: users_variance_order_by
 }
 
 """
@@ -4136,20 +3507,6 @@ input users_arr_rel_insert_input {
 
   """upsert condition"""
   on_conflict: users_on_conflict
-}
-
-"""aggregate avg on columns"""
-type users_avg_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by avg() on columns of table "users"
-"""
-input users_avg_order_by {
-  id: order_by
-  team_id: order_by
 }
 
 """
@@ -4166,8 +3523,9 @@ input users_bool_exp {
   email_verification_code: String_comparison_exp
   first_name: String_comparison_exp
   hash: String_comparison_exp
-  id: bigint_comparison_exp
+  id: String_comparison_exp
   is_admin: Boolean_comparison_exp
+  is_banned: Boolean_comparison_exp
   is_email_verified: Boolean_comparison_exp
   last_name: String_comparison_exp
   salt: String_comparison_exp
@@ -4176,7 +3534,7 @@ input users_bool_exp {
   submissions: submissions_bool_exp
   submissions_aggregate: submissions_aggregate_bool_exp
   team: teams_bool_exp
-  team_id: bigint_comparison_exp
+  team_id: String_comparison_exp
   updated_at: timestamptz_comparison_exp
 }
 
@@ -4206,14 +3564,6 @@ enum users_constraint {
 }
 
 """
-input type for incrementing numeric columns in table "users"
-"""
-input users_inc_input {
-  id: bigint
-  team_id: bigint
-}
-
-"""
 input type for inserting data into table "users"
 """
 input users_insert_input {
@@ -4223,15 +3573,16 @@ input users_insert_input {
   email_verification_code: String
   first_name: String
   hash: String
-  id: bigint
+  id: String
   is_admin: Boolean
+  is_banned: Boolean
   is_email_verified: Boolean
   last_name: String
   salt: String
   scores: scores_arr_rel_insert_input
   submissions: submissions_arr_rel_insert_input
   team: teams_obj_rel_insert_input
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz
 }
 
@@ -4242,10 +3593,10 @@ type users_max_fields {
   email_verification_code: String
   first_name: String
   hash: String
-  id: bigint
+  id: String
   last_name: String
   salt: String
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz
 }
 
@@ -4272,10 +3623,10 @@ type users_min_fields {
   email_verification_code: String
   first_name: String
   hash: String
-  id: bigint
+  id: String
   last_name: String
   salt: String
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz
 }
 
@@ -4335,6 +3686,7 @@ input users_order_by {
   hash: order_by
   id: order_by
   is_admin: order_by
+  is_banned: order_by
   is_email_verified: order_by
   last_name: order_by
   salt: order_by
@@ -4347,7 +3699,7 @@ input users_order_by {
 
 """primary key columns input for table: users"""
 input users_pk_columns_input {
-  id: bigint!
+  id: String!
 }
 
 """
@@ -4376,6 +3728,9 @@ enum users_select_column {
   is_admin
 
   """column name"""
+  is_banned
+
+  """column name"""
   is_email_verified
 
   """column name"""
@@ -4399,6 +3754,9 @@ enum users_select_column_users_aggregate_bool_exp_bool_and_arguments_columns {
   is_admin
 
   """column name"""
+  is_banned
+
+  """column name"""
   is_email_verified
 }
 
@@ -4408,6 +3766,9 @@ select "users_aggregate_bool_exp_bool_or_arguments_columns" columns of table "us
 enum users_select_column_users_aggregate_bool_exp_bool_or_arguments_columns {
   """column name"""
   is_admin
+
+  """column name"""
+  is_banned
 
   """column name"""
   is_email_verified
@@ -4422,55 +3783,14 @@ input users_set_input {
   email_verification_code: String
   first_name: String
   hash: String
-  id: bigint
+  id: String
   is_admin: Boolean
+  is_banned: Boolean
   is_email_verified: Boolean
   last_name: String
   salt: String
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz
-}
-
-"""aggregate stddev on columns"""
-type users_stddev_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by stddev() on columns of table "users"
-"""
-input users_stddev_order_by {
-  id: order_by
-  team_id: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type users_stddev_pop_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "users"
-"""
-input users_stddev_pop_order_by {
-  id: order_by
-  team_id: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type users_stddev_samp_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "users"
-"""
-input users_stddev_samp_order_by {
-  id: order_by
-  team_id: order_by
 }
 
 """
@@ -4491,27 +3811,14 @@ input users_stream_cursor_value_input {
   email_verification_code: String
   first_name: String
   hash: String
-  id: bigint
+  id: String
   is_admin: Boolean
+  is_banned: Boolean
   is_email_verified: Boolean
   last_name: String
   salt: String
-  team_id: bigint
+  team_id: String
   updated_at: timestamptz
-}
-
-"""aggregate sum on columns"""
-type users_sum_fields {
-  id: bigint
-  team_id: bigint
-}
-
-"""
-order by sum() on columns of table "users"
-"""
-input users_sum_order_by {
-  id: order_by
-  team_id: order_by
 }
 
 """
@@ -4540,6 +3847,9 @@ enum users_update_column {
   is_admin
 
   """column name"""
+  is_banned
+
+  """column name"""
   is_email_verified
 
   """column name"""
@@ -4556,9 +3866,6 @@ enum users_update_column {
 }
 
 input users_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: users_inc_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: users_set_input
 
@@ -4566,44 +3873,3 @@ input users_updates {
   where: users_bool_exp!
 }
 
-"""aggregate var_pop on columns"""
-type users_var_pop_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by var_pop() on columns of table "users"
-"""
-input users_var_pop_order_by {
-  id: order_by
-  team_id: order_by
-}
-
-"""aggregate var_samp on columns"""
-type users_var_samp_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by var_samp() on columns of table "users"
-"""
-input users_var_samp_order_by {
-  id: order_by
-  team_id: order_by
-}
-
-"""aggregate variance on columns"""
-type users_variance_fields {
-  id: Float
-  team_id: Float
-}
-
-"""
-order by variance() on columns of table "users"
-"""
-input users_variance_order_by {
-  id: order_by
-  team_id: order_by
-}
