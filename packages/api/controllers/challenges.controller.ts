@@ -69,7 +69,7 @@ export class ChallengeController extends ChallengeService {
                     message: error.message
                 }, 404) : ctx.json({
                     status: 500,
-                    message: error.message
+                    message: "Something went wrong, come to us :)"
                 }, 500);
         }
     };
@@ -91,16 +91,16 @@ export class ChallengeController extends ChallengeService {
             });
             return ctx.json({
                 status: 200,
-                message: data
+                data
             });
         }
         catch (error: any) {
             switch (error.message) {
                 case "Wrong flag": {
                     return ctx.json({
-                        status: 418,
+                        status: 401,
                         message: error.message
-                    }, 418);
+                    }, 401);
                 }
                 case "User not in team": {
                     return ctx.json({
@@ -131,7 +131,7 @@ export class ChallengeController extends ChallengeService {
                 default: {
                     return ctx.json({
                         status: 500,
-                        message: error.message
+                        message: "Something went wrong, come to us :)"
                     }, 500);
                 }
             }
