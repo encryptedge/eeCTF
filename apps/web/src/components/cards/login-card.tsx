@@ -26,8 +26,8 @@ export const LoginCard = () => {
         }
       )
       .then((response) => {
-        if (response.data.message === "Login successful") {
-          token = response.data.token;
+        if (response.data.status === 200) {
+          token = response.data.message.token;
           localStorage.setItem("token", token);
           toast.success("Login Successful!", {
             position: "bottom-right",
@@ -61,48 +61,44 @@ export const LoginCard = () => {
   };
   return (
     <div>
-      <div className='login-card'>
+      <div className="login-card">
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
-          <div className='form-control'>
-            <div className='form-el-container'>
-              <label htmlFor='email'>Email</label>
+          <div className="form-control">
+            <div className="form-el-container">
+              <label htmlFor="email">Email</label>
             </div>
-            <div className='form-el-container'>
+            <div className="form-el-container">
               <input
-                className='forminput'
-                type='text'
-                id='email'
+                className="forminput"
+                type="text"
+                id="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder='Enter your email'
+                placeholder="Enter your email"
               />
             </div>
           </div>
-          <div className='form-control'>
-            <div className='form-el-container'>
-              <label htmlFor='password'>Password</label>
+          <div className="form-control">
+            <div className="form-el-container">
+              <label htmlFor="password">Password</label>
             </div>
-            <div className='form-el-container'>
+            <div className="form-el-container">
               <input
-                className='forminput'
-                type='password'
-                id='password'
+                className="forminput"
+                type="password"
+                id="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder='Enter your password'
+                placeholder="Enter your password"
               />
             </div>
           </div>
-          <button className='btn' type='submit'>
+          <button className="btn" type="submit">
             Sign In
           </button>
         </form>
       </div>
-      <p className='read-the-docs'>
-        Don&apos;t have a account, register from{" "}
-        <Link to='/register'>here</Link>.
-      </p>
     </div>
   );
 };

@@ -64,8 +64,8 @@ export const RegisterCard = () => {
 
   return (
     <div>
-      <div className='login-card'>
-        <h2>Sign In</h2>
+      <div className='signup-card login-card'>
+        <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className='form-control'>
             <div className='form-el-container'>
@@ -132,9 +132,6 @@ export const RegisterCard = () => {
           </button>
         </form>
       </div>
-      <p className='read-the-docs'>
-        Already have a account? Login from <Link to='/login'>here</Link>.
-      </p>
     </div>
   );
 };

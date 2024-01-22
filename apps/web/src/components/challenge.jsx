@@ -38,7 +38,7 @@ const Challenge = ({ id, name, madeby, tags, desp, point, setMachines, solved })
                         }
                     }).then(res => {
                         if(res.data.message === 'Invalid token') return window.location.href = '/login';
-                        setMachines(res.data);
+                        setMachines(res.data.message);
                     })
                 } else {
                     toast.error('Wrong Flag!', {
