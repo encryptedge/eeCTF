@@ -151,6 +151,73 @@ importers:
 
   packages/deployer-url: {}
 
+  packages/scorefeed:
+    dependencies:
+      '@graphql-codegen/cli':
+        specifier: ^5.0.0
+        version: 5.0.0(@types/node@20.10.6)(graphql@16.8.1)(typescript@5.3.3)
+      '@graphql-codegen/typescript':
+        specifier: ^4.0.1
+        version: 4.0.1(graphql@16.8.1)
+      '@graphql-codegen/typescript-operations':
+        specifier: ^4.0.1
+        version: 4.0.1(graphql@16.8.1)
+      '@hono/node-server':
+        specifier: ^1.3.2
+        version: 1.3.2
+      '@upstash/redis':
+        specifier: ^1.28.1
+        version: 1.28.1
+      axios:
+        specifier: ^1.6.2
+        version: 1.6.2
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
+      eslint:
+        specifier: ^8.53.0
+        version: 8.56.0
+      graphql-request:
+        specifier: ^6.1.0
+        version: 6.1.0(graphql@16.8.1)
+      hono:
+        specifier: ^3.11.7
+        version: 3.11.7
+      hyperflake:
+        specifier: ^0.1.2
+        version: 0.1.2
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
+      nodemailer:
+        specifier: ^6.9.7
+        version: 6.9.7
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@esbuild-kit/esm-loader':
+        specifier: ^2.6.5
+        version: 2.6.5
+      '@types/jsonwebtoken':
+        specifier: ^9.0.5
+        version: 9.0.5
+      '@types/node':
+        specifier: ^20.10.4
+        version: 20.10.6
+      '@types/nodemailer':
+        specifier: ^6.4.14
+        version: 6.4.14
+      graphqurl:
+        specifier: ^1.0.1
+        version: 1.0.1(@types/node@20.10.6)
+      hasura-cli:
+        specifier: ^2.35.2
+        version: 2.35.2
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -2156,7 +2223,7 @@ packages:
     engines: {node: '>=8.0.0'}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     dependencies:
-      '@oclif/errors': 1.3.4
+      '@oclif/errors': 1.3.6
       '@oclif/parser': 3.8.17
       debug: 4.3.4(supports-color@5.5.0)
       globby: 11.1.0
@@ -2211,7 +2278,7 @@ packages:
     dependencies:
       '@oclif/command': 1.8.0(@oclif/config@1.17.0)
       '@oclif/config': 1.17.0
-      '@oclif/errors': 1.3.4
+      '@oclif/errors': 1.3.6
       chalk: 2.4.2
       indent-string: 4.0.0
       lodash.template: 4.5.0
