@@ -20,9 +20,7 @@ export class CTFTimeClient {
             urlparams.append("state", "eeCTF");
             return `${this.baseURL}/authorize?${urlparams.toString()}`;
         } catch (error) {
-            if(error instanceof Error) {
-                throw new TypeError(error.message);
-            }
+            return error;
         }
     }
 

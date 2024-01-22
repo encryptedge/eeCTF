@@ -13,13 +13,13 @@ export class BanService  {
                 id: snowflake.generate(),
                 user_id: userId,
                 ip,
-            }
+            };
             const query = gql`
-                mutation createBanRecord($object: bans_insert_input!) {
-                    insert_bans_one(object: $object) {
-                        id
-                    }
-                }
+              mutation createBanRecord($object: bans_insert_input!) {
+                  insert_bans_one(object: $object) {
+                      id
+                  }
+              }
             `;
 
             const { insert_bans_one } : Mutation_Root = await client.request(query, {
@@ -35,16 +35,16 @@ export class BanService  {
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
 
     public checkBanListS = async (userId: string) => {
         try {
             const query = gql`
-                query checkUserForBan($userId: String!) {
-                    users_by_pk(id: $userId) {
-                        is_banned
-                    }
-                }
+              query checkUserForBan($userId: String!) {
+                  users_by_pk(id: $userId) {
+                      is_banned
+                  }
+              }
             `;
 
             const { users_by_pk } : Query_Root = await client.request(query, {
@@ -60,5 +60,5 @@ export class BanService  {
         catch (error: any) {
             throw new Error(error.message);
         }
-    }
+    };
 }

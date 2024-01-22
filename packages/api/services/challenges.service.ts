@@ -361,7 +361,7 @@ export class ChallengeService {
                             description: machine.description,
                             challenges: [],
                             total_challenges: total_machines_progress[machine.id],
-                            depends_on: machine.depends_on ?? '',
+                            depends_on: machine.depends_on ?? "",
                         };
 
                         for(const challenge of machine.challenges) {
