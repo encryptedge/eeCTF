@@ -1,5 +1,4 @@
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "../components/navbar";
 import { useEffect, useState } from "react";
 import Machines from "../components/machine";
 import Challenge from "../components/challenge";
