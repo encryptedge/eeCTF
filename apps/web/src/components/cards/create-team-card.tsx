@@ -1,13 +1,29 @@
 import React from "react";
+import apiClient from "../../libs/api.client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function CreateTeamCard() {
   const [teamName, setTeamName] = useState("");
   const [teamCode, setTeamCode] = useState("");
+
+  async function submitData(evt) {
+    evt.preventDefault();
+    try {
+      const res = await apiClient.post("/team", {
+        team_name: teamName,
+        join_code: teamCode,
+      });
+      window.location.href = "/whoami";
+    } catch (err) {
+      console.error("errr");
+      toast.error("Error creating team");
+    }
+  }
   return (
     <div className="login-card">
       <h2>Create A Team</h2>
-      <form onSubmit={() => {}}>
+      <form onSubmit={submitData}>
         <div className="form-control">
           <div className="form-el-container">
             <label htmlFor="team_name">Team Name</label>

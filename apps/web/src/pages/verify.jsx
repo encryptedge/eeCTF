@@ -2,7 +2,7 @@ import { useState } from "react";
 import apiClient from "../libs/api.client";
 import { ToastContainer, toast } from "react-toastify";
 
-import "react-toastify/dist/ReactToastify.css";
+
 
 function Home() {
   const [otp, setOtp] = useState("");

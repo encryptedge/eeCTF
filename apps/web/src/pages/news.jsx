@@ -1,4 +1,4 @@
-import "react-toastify/dist/ReactToastify.css";
+
 import Navbar from "../components/navbar";
 
 function News() {

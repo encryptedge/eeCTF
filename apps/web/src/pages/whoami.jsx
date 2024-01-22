@@ -1,5 +1,5 @@
 import "../styles/App.css";
-import "react-toastify/dist/ReactToastify.css";
+
 import { useState, useEffect } from "react";
 import apiClient from "../libs/api.client";
 import Navbar from "../components/navbar";

@@ -1,8 +1,10 @@
 import React from "react";
+import apiClient from "../../libs/api.client";
 import { useState } from "react";
 
 function JoinTeamCard() {
   const [teamCode, setTeamCode] = useState("");
+  
   return (
     <div className="signup-card login-card">
       <h2>Join a Team</h2>

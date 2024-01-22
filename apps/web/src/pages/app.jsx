@@ -1,4 +1,4 @@
-import "react-toastify/dist/ReactToastify.css";
+
 import { useEffect, useState } from "react";
 import Machines from "../components/machine";
 import Challenge from "../components/challenge";
