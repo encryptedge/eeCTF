@@ -3,7 +3,7 @@ import apiClient from "../libs/api.client";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-import "react-toastify/dist/ReactToastify.css";
+
 
 function Home() {
   const [email, setEmail] = useState("");

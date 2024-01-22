@@ -1,5 +1,5 @@
 
-import "react-toastify/dist/ReactToastify.css";
+
 import Navbar from "../components/navbar";
 import { url } from '../libs/api.client';
 

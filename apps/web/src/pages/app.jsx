@@ -1,4 +1,4 @@
-import "react-toastify/dist/ReactToastify.css";
+
 import { useEffect, useState } from "react";
 import Machines from "../components/machine";
 import Challenge from "../components/challenge";
@@ -24,10 +24,10 @@ function Player() {
         },
       })
       .then((res) => {
-        if (!Array.isArray(res.data)) return (window.location.href = "/");
+        if (!Array.isArray(res.data.message)) return (window.location.href = "/");
         if (res.data.message === "Invalid token")
           return (window.location.href = "/");
-        setMachines(res.data);
+        setMachines(res.data.message);
       });
   }, [token]);
 

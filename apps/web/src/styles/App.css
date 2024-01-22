@@ -39,6 +39,9 @@
   max-width: 30em;
   margin: 0 auto;
 }
+.signup-card{
+  border-left: 1px solid #FFF;
+}
 
 .form-control {
   display: block;

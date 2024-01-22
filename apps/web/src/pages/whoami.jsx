@@ -1,5 +1,5 @@
 import "../styles/App.css";
-import "react-toastify/dist/ReactToastify.css";
+
 import { useState, useEffect } from "react";
 import apiClient from "../libs/api.client";
 import Navbar from "../components/navbar";
@@ -27,7 +27,7 @@ function WhoAmI() {
 
         if (res.data.message === "Invalid token")
           return (window.location.href = "/");
-        setUserWhoami(res.data);
+        setUserWhoami(res.data.message);
       });
 
     apiClient
@@ -41,7 +41,7 @@ function WhoAmI() {
 
         if (res.data.message === "Invalid token")
           return (window.location.href = "/");
-        setTeamWhoami(res.data);
+        setTeamWhoami(res.data.message);
       });
         apiClient.get("/stats/team", {
             headers: {
@@ -50,7 +50,7 @@ function WhoAmI() {
         }).then(res => {
             if(res.data.error) return window.location.href = '/login'
             if(res.data.message === 'Invalid token') return window.location.href = '/login';
-            setTeamStats(res.data);
+            setTeamStats(res.data.message);
         })
     }, [])
 
