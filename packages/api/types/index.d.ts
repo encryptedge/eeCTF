@@ -77,6 +77,8 @@ interface IParedMachineProgress {
     name: string;
     description: string;
     challenges?: IParsedChallengeProgress[];
+    total_challenges?: number;
+    depends_on?: string;
 }
 
 interface IParsedChallengeProgress {

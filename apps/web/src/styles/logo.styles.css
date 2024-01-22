@@ -1,0 +1,25 @@
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+  --r: 10px; /* control the radius of the circles */
+  padding: calc(2 * var(--r));
+  filter: grayscale(0.4);
+  border-radius: 100%;
+  cursor: pointer;
+  object-position: -1px 2px;
+  font-size: 0.7em;
+  /* background:
+    radial-gradient(var(--r), #0000 98%, #fff) round calc(-1.5 * var(--r))
+      calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),
+    linear-gradient(#fff 0 0) no-repeat 50% / calc(100% - 3 * var(--r))
+      calc(100% - 3 * var(--r)); */
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo .react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
