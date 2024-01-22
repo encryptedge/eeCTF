@@ -3,8 +3,18 @@ import { SnowflakeId } from "hyperflake";
 
 import { Challenges_Insert_Input, Machines_Insert_Input, Mutation_Root, Query_Root } from "../graphql/types";
 import { client } from "../helpers/gqlClient";
+import { notifyForBlood } from "../helpers/notifyBlood";
 
 const snowflake = SnowflakeId();
+
+interface IBloodCheck extends Query_Root {
+    blood_check: {
+        challenge_id: string;
+        submission: {
+            submited_flag: string;
+        };
+    }[];
+}
 
 export class ChallengeService {
     public createMachineS = async (reqBody: IMachineCreateInput) => {
@@ -164,6 +174,7 @@ export class ChallengeService {
 
     public submitFlagS = async (reqBody: IMachineSubmitFlagInput) => {
         try {
+            let is_blood_aquired = false;
             const { challenge_id, submited_flag, team_id, user_id } = reqBody;
 
             if (!challenge_id || !submited_flag || !team_id || !user_id) {
@@ -175,13 +186,24 @@ export class ChallengeService {
                   scores(where: {challenge_id: {_eq: $challenge_id}, team_id: { _eq: $team_id }}) {
                       id
                   }
+
+                  blood_check: scores(where: {challenge_id: {_eq: $challenge_id}}) {
+                    challenge_id
+                    submission {
+                        submited_flag
+                    }
+                  }
               }
             `;
 
-            const { scores } : Query_Root = await client.request(queryPreCheck, {
+            const { scores, blood_check } : IBloodCheck = await client.request(queryPreCheck, {
                 challenge_id,
                 team_id,
             });
+
+            if(blood_check.length > 0){
+                is_blood_aquired = true;
+            }
 
             if(scores.length > 0){
                 throw new Error("Already solved");
@@ -236,6 +258,12 @@ export class ChallengeService {
                       id
                       team_id
                       user_id
+                      team {
+                        name
+                      }
+                      challenge {
+                        name
+                      }
                   }
               }
             `;
@@ -250,6 +278,13 @@ export class ChallengeService {
 
             if(!insert_scores_one){
                 throw new Error("Failed to submit score");
+            }
+
+            if(!is_blood_aquired){
+                notifyForBlood({
+                    teamName: insert_scores_one.team.name,
+                    challengeName: insert_scores_one.challenge.name,
+                });
             }
 
             return {

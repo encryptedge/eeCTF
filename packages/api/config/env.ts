@@ -17,6 +17,7 @@ const ZodEnvironmentVariables = z.object({
     MAIL_LOGGER: z.string(),
     MAIL_FROM_EMAIL: z.string(),
     MAIL_FROM_NAME: z.string(),
+    DISCORD_BLOOD_HOOK: z.string(),
 });
 
 ZodEnvironmentVariables.parse(process.env);
