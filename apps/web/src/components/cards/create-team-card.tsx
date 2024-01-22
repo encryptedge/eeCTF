@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import apiClient from "../../libs/api.client";
-import { useState } from "react";
 import { toast } from "react-toastify";
 
 function CreateTeamCard() {
@@ -10,14 +9,29 @@ function CreateTeamCard() {
   async function submitData(evt) {
     evt.preventDefault();
     try {
-      const res = await apiClient.post("/team", {
+      await apiClient.post("/team", {
         team_name: teamName,
         join_code: teamCode,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
-      window.location.href = "/whoami";
+      toast.success("Team created successfully");
+
+      await apiClient.post("/team/join",{
+        join_code: teamCode,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      toast.success("Team joined successfully");
     } catch (err) {
-      console.error("errr");
-      toast.error("Error creating team");
+      toast.error(err.response.data.message || "Error creating team");
     }
   }
   return (

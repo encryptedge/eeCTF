@@ -37,7 +37,7 @@ export const LoginCard = () => {
             draggable: true,
           });
           setTimeout(() => {
-            window.location.href = "/app";
+            window.location.href = "/";
           }, 3000);
         } else {
           toast.error("Login Failed!", {

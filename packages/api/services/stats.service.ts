@@ -38,6 +38,14 @@ export class StatsService {
                 throw new Error("No team scores found");
             }
 
+            else if(scores.length === 0){
+                return {
+                    team_id: teamId,
+                    score: 0,
+                    submissions: [],
+                };
+            }
+
             const teamScore: ITeamStats = {
                 team_id: teamId,
                 team_name: scores[0].team.name,
@@ -60,6 +68,7 @@ export class StatsService {
             return teamScore;
         }
         catch (error: any) {
+            console.log(error);
             throw new Error(error.message);
         }
     };
