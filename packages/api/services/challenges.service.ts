@@ -404,10 +404,8 @@ export class ChallengeService {
                     for (const machine of challengeCollection) {
                         if(machine.depends_on) {
                             const depends_on_machine = challengeCollection.find(challenge => challenge.id === machine.depends_on);
-                            if(depends_on_machine) {
-                                if(depends_on_machine.challenges?.length !== depends_on_machine.total_challenges) {
-                                    challengeCollection.splice(challengeCollection.indexOf(machine), 1);
-                                }
+                            if(depends_on_machine && depends_on_machine.challenges?.length !== depends_on_machine.total_challenges) {
+                                challengeCollection.splice(challengeCollection.indexOf(machine), 1);
                             }
                         }
                     }
