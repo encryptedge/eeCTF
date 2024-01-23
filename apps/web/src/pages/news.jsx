@@ -1,12 +1,13 @@
-
 import Navbar from "../components/navbar";
+import News from "../components/news";
 
-function News() {
+function NewsHome() {
   return (
     <>
       <Navbar pageTitle={"News"} />
+      <News />
     </>
   );
 }
 
-export default News;
+export default NewsHome;

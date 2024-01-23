@@ -950,6 +950,45 @@ type machines {
   depends_on: String
   description: String!
   id: String!
+
+  """An object relationship"""
+  machine: machines
+
+  """An array relationship"""
+  machines(
+    """distinct select on columns"""
+    distinct_on: [machines_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [machines_order_by!]
+
+    """filter the rows returned"""
+    where: machines_bool_exp
+  ): [machines!]!
+
+  """An aggregate relationship"""
+  machines_aggregate(
+    """distinct select on columns"""
+    distinct_on: [machines_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [machines_order_by!]
+
+    """filter the rows returned"""
+    where: machines_bool_exp
+  ): machines_aggregate!
   name: String!
   no_of_solves: Int!
   tags: String!
@@ -962,6 +1001,17 @@ aggregated selection of "machines"
 type machines_aggregate {
   aggregate: machines_aggregate_fields
   nodes: [machines!]!
+}
+
+input machines_aggregate_bool_exp {
+  count: machines_aggregate_bool_exp_count
+}
+
+input machines_aggregate_bool_exp_count {
+  arguments: [machines_select_column!]
+  distinct: Boolean
+  filter: machines_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -981,9 +1031,43 @@ type machines_aggregate_fields {
   variance: machines_variance_fields
 }
 
+"""
+order by aggregate values of table "machines"
+"""
+input machines_aggregate_order_by {
+  avg: machines_avg_order_by
+  count: order_by
+  max: machines_max_order_by
+  min: machines_min_order_by
+  stddev: machines_stddev_order_by
+  stddev_pop: machines_stddev_pop_order_by
+  stddev_samp: machines_stddev_samp_order_by
+  sum: machines_sum_order_by
+  var_pop: machines_var_pop_order_by
+  var_samp: machines_var_samp_order_by
+  variance: machines_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "machines"
+"""
+input machines_arr_rel_insert_input {
+  data: [machines_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: machines_on_conflict
+}
+
 """aggregate avg on columns"""
 type machines_avg_fields {
   no_of_solves: Float
+}
+
+"""
+order by avg() on columns of table "machines"
+"""
+input machines_avg_order_by {
+  no_of_solves: order_by
 }
 
 """
@@ -1000,6 +1084,9 @@ input machines_bool_exp {
   depends_on: String_comparison_exp
   description: String_comparison_exp
   id: String_comparison_exp
+  machine: machines_bool_exp
+  machines: machines_bool_exp
+  machines_aggregate: machines_aggregate_bool_exp
   name: String_comparison_exp
   no_of_solves: Int_comparison_exp
   tags: String_comparison_exp
@@ -1038,6 +1125,8 @@ input machines_insert_input {
   depends_on: String
   description: String
   id: String
+  machine: machines_obj_rel_insert_input
+  machines: machines_arr_rel_insert_input
   name: String
   no_of_solves: Int
   tags: String
@@ -1057,6 +1146,21 @@ type machines_max_fields {
   updated_at: timestamptz
 }
 
+"""
+order by max() on columns of table "machines"
+"""
+input machines_max_order_by {
+  created_at: order_by
+  created_by: order_by
+  depends_on: order_by
+  description: order_by
+  id: order_by
+  name: order_by
+  no_of_solves: order_by
+  tags: order_by
+  updated_at: order_by
+}
+
 """aggregate min on columns"""
 type machines_min_fields {
   created_at: timestamptz
@@ -1068,6 +1172,21 @@ type machines_min_fields {
   no_of_solves: Int
   tags: String
   updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "machines"
+"""
+input machines_min_order_by {
+  created_at: order_by
+  created_by: order_by
+  depends_on: order_by
+  description: order_by
+  id: order_by
+  name: order_by
+  no_of_solves: order_by
+  tags: order_by
+  updated_at: order_by
 }
 
 """
@@ -1108,6 +1227,8 @@ input machines_order_by {
   depends_on: order_by
   description: order_by
   id: order_by
+  machine: machines_order_by
+  machines_aggregate: machines_aggregate_order_by
   name: order_by
   no_of_solves: order_by
   tags: order_by
@@ -1171,14 +1292,35 @@ type machines_stddev_fields {
   no_of_solves: Float
 }
 
+"""
+order by stddev() on columns of table "machines"
+"""
+input machines_stddev_order_by {
+  no_of_solves: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type machines_stddev_pop_fields {
   no_of_solves: Float
 }
 
+"""
+order by stddev_pop() on columns of table "machines"
+"""
+input machines_stddev_pop_order_by {
+  no_of_solves: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type machines_stddev_samp_fields {
   no_of_solves: Float
+}
+
+"""
+order by stddev_samp() on columns of table "machines"
+"""
+input machines_stddev_samp_order_by {
+  no_of_solves: order_by
 }
 
 """
@@ -1208,6 +1350,13 @@ input machines_stream_cursor_value_input {
 """aggregate sum on columns"""
 type machines_sum_fields {
   no_of_solves: Int
+}
+
+"""
+order by sum() on columns of table "machines"
+"""
+input machines_sum_order_by {
+  no_of_solves: order_by
 }
 
 """
@@ -1258,14 +1407,35 @@ type machines_var_pop_fields {
   no_of_solves: Float
 }
 
+"""
+order by var_pop() on columns of table "machines"
+"""
+input machines_var_pop_order_by {
+  no_of_solves: order_by
+}
+
 """aggregate var_samp on columns"""
 type machines_var_samp_fields {
   no_of_solves: Float
 }
 
+"""
+order by var_samp() on columns of table "machines"
+"""
+input machines_var_samp_order_by {
+  no_of_solves: order_by
+}
+
 """aggregate variance on columns"""
 type machines_variance_fields {
   no_of_solves: Float
+}
+
+"""
+order by variance() on columns of table "machines"
+"""
+input machines_variance_order_by {
+  no_of_solves: order_by
 }
 
 """mutation root"""
@@ -1308,6 +1478,19 @@ type mutation_root {
   delete single row from the table: "machines"
   """
   delete_machines_by_pk(id: String!): machines
+
+  """
+  delete data from the table: "news"
+  """
+  delete_news(
+    """filter the rows which have to be deleted"""
+    where: news_bool_exp!
+  ): news_mutation_response
+
+  """
+  delete single row from the table: "news"
+  """
+  delete_news_by_pk(id: String!): news
 
   """
   delete data from the table: "scores"
@@ -1426,6 +1609,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: machines_on_conflict
   ): machines
+
+  """
+  insert data into the table: "news"
+  """
+  insert_news(
+    """the rows to be inserted"""
+    objects: [news_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: news_on_conflict
+  ): news_mutation_response
+
+  """
+  insert a single row into the table: "news"
+  """
+  insert_news_one(
+    """the row to be inserted"""
+    object: news_insert_input!
+
+    """upsert condition"""
+    on_conflict: news_on_conflict
+  ): news
 
   """
   insert data into the table: "scores"
@@ -1612,6 +1817,34 @@ type mutation_root {
   ): [machines_mutation_response]
 
   """
+  update data of the table: "news"
+  """
+  update_news(
+    """sets the columns of the filtered rows to the given values"""
+    _set: news_set_input
+
+    """filter the rows which have to be updated"""
+    where: news_bool_exp!
+  ): news_mutation_response
+
+  """
+  update single row of the table: "news"
+  """
+  update_news_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: news_set_input
+    pk_columns: news_pk_columns_input!
+  ): news
+
+  """
+  update multiples rows of table: "news"
+  """
+  update_news_many(
+    """updates to execute, in order"""
+    updates: [news_updates!]!
+  ): [news_mutation_response]
+
+  """
   update data of the table: "scores"
   """
   update_scores(
@@ -1724,6 +1957,186 @@ type mutation_root {
   ): [users_mutation_response]
 }
 
+"""
+columns and relationships of "news"
+"""
+type news {
+  created_at: timestamptz!
+  id: String!
+  msg: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "news"
+"""
+type news_aggregate {
+  aggregate: news_aggregate_fields
+  nodes: [news!]!
+}
+
+"""
+aggregate fields of "news"
+"""
+type news_aggregate_fields {
+  count(columns: [news_select_column!], distinct: Boolean): Int!
+  max: news_max_fields
+  min: news_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "news". All fields are combined with a logical 'AND'.
+"""
+input news_bool_exp {
+  _and: [news_bool_exp!]
+  _not: news_bool_exp
+  _or: [news_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  id: String_comparison_exp
+  msg: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "news"
+"""
+enum news_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  news_pkey
+}
+
+"""
+input type for inserting data into table "news"
+"""
+input news_insert_input {
+  created_at: timestamptz
+  id: String
+  msg: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type news_max_fields {
+  created_at: timestamptz
+  id: String
+  msg: String
+  updated_at: timestamptz
+}
+
+"""aggregate min on columns"""
+type news_min_fields {
+  created_at: timestamptz
+  id: String
+  msg: String
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "news"
+"""
+type news_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [news!]!
+}
+
+"""
+on_conflict condition type for table "news"
+"""
+input news_on_conflict {
+  constraint: news_constraint!
+  update_columns: [news_update_column!]! = []
+  where: news_bool_exp
+}
+
+"""Ordering options when selecting data from "news"."""
+input news_order_by {
+  created_at: order_by
+  id: order_by
+  msg: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: news"""
+input news_pk_columns_input {
+  id: String!
+}
+
+"""
+select columns of table "news"
+"""
+enum news_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  msg
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "news"
+"""
+input news_set_input {
+  created_at: timestamptz
+  id: String
+  msg: String
+  updated_at: timestamptz
+}
+
+"""
+Streaming cursor of the table "news"
+"""
+input news_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: news_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input news_stream_cursor_value_input {
+  created_at: timestamptz
+  id: String
+  msg: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "news"
+"""
+enum news_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  msg
+
+  """column name"""
+  updated_at
+}
+
+input news_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: news_set_input
+
+  """filter the rows which have to be updated"""
+  where: news_bool_exp!
+}
+
 """column ordering options"""
 enum order_by {
   """in ascending order, nulls last"""
@@ -1824,9 +2237,7 @@ type query_root {
   """fetch data from the table: "challenges" using primary key columns"""
   challenges_by_pk(id: String!): challenges
 
-  """
-  fetch data from the table: "machines"
-  """
+  """An array relationship"""
   machines(
     """distinct select on columns"""
     distinct_on: [machines_select_column!]
@@ -1844,9 +2255,7 @@ type query_root {
     where: machines_bool_exp
   ): [machines!]!
 
-  """
-  fetch aggregated fields from the table: "machines"
-  """
+  """An aggregate relationship"""
   machines_aggregate(
     """distinct select on columns"""
     distinct_on: [machines_select_column!]
@@ -1866,6 +2275,49 @@ type query_root {
 
   """fetch data from the table: "machines" using primary key columns"""
   machines_by_pk(id: String!): machines
+
+  """
+  fetch data from the table: "news"
+  """
+  news(
+    """distinct select on columns"""
+    distinct_on: [news_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [news_order_by!]
+
+    """filter the rows returned"""
+    where: news_bool_exp
+  ): [news!]!
+
+  """
+  fetch aggregated fields from the table: "news"
+  """
+  news_aggregate(
+    """distinct select on columns"""
+    distinct_on: [news_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [news_order_by!]
+
+    """filter the rows returned"""
+    where: news_bool_exp
+  ): news_aggregate!
+
+  """fetch data from the table: "news" using primary key columns"""
+  news_by_pk(id: String!): news
 
   """An array relationship"""
   scores(
@@ -2736,9 +3188,7 @@ type subscription_root {
     where: challenges_bool_exp
   ): [challenges!]!
 
-  """
-  fetch data from the table: "machines"
-  """
+  """An array relationship"""
   machines(
     """distinct select on columns"""
     distinct_on: [machines_select_column!]
@@ -2756,9 +3206,7 @@ type subscription_root {
     where: machines_bool_exp
   ): [machines!]!
 
-  """
-  fetch aggregated fields from the table: "machines"
-  """
+  """An aggregate relationship"""
   machines_aggregate(
     """distinct select on columns"""
     distinct_on: [machines_select_column!]
@@ -2792,6 +3240,63 @@ type subscription_root {
     """filter the rows returned"""
     where: machines_bool_exp
   ): [machines!]!
+
+  """
+  fetch data from the table: "news"
+  """
+  news(
+    """distinct select on columns"""
+    distinct_on: [news_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [news_order_by!]
+
+    """filter the rows returned"""
+    where: news_bool_exp
+  ): [news!]!
+
+  """
+  fetch aggregated fields from the table: "news"
+  """
+  news_aggregate(
+    """distinct select on columns"""
+    distinct_on: [news_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [news_order_by!]
+
+    """filter the rows returned"""
+    where: news_bool_exp
+  ): news_aggregate!
+
+  """fetch data from the table: "news" using primary key columns"""
+  news_by_pk(id: String!): news
+
+  """
+  fetch data from the table in a streaming manner: "news"
+  """
+  news_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [news_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: news_bool_exp
+  ): [news!]!
 
   """An array relationship"""
   scores(
@@ -3357,6 +3862,7 @@ type users {
     where: bans_bool_exp
   ): bans_aggregate!
   created_at: timestamptz!
+  ctftime_username: String
   email: String!
   email_verification_code: String!
   first_name: String!
@@ -3519,6 +4025,7 @@ input users_bool_exp {
   bans: bans_bool_exp
   bans_aggregate: bans_aggregate_bool_exp
   created_at: timestamptz_comparison_exp
+  ctftime_username: String_comparison_exp
   email: String_comparison_exp
   email_verification_code: String_comparison_exp
   first_name: String_comparison_exp
@@ -3569,6 +4076,7 @@ input type for inserting data into table "users"
 input users_insert_input {
   bans: bans_arr_rel_insert_input
   created_at: timestamptz
+  ctftime_username: String
   email: String
   email_verification_code: String
   first_name: String
@@ -3589,6 +4097,7 @@ input users_insert_input {
 """aggregate max on columns"""
 type users_max_fields {
   created_at: timestamptz
+  ctftime_username: String
   email: String
   email_verification_code: String
   first_name: String
@@ -3605,6 +4114,7 @@ order by max() on columns of table "users"
 """
 input users_max_order_by {
   created_at: order_by
+  ctftime_username: order_by
   email: order_by
   email_verification_code: order_by
   first_name: order_by
@@ -3619,6 +4129,7 @@ input users_max_order_by {
 """aggregate min on columns"""
 type users_min_fields {
   created_at: timestamptz
+  ctftime_username: String
   email: String
   email_verification_code: String
   first_name: String
@@ -3635,6 +4146,7 @@ order by min() on columns of table "users"
 """
 input users_min_order_by {
   created_at: order_by
+  ctftime_username: order_by
   email: order_by
   email_verification_code: order_by
   first_name: order_by
@@ -3680,6 +4192,7 @@ input users_on_conflict {
 input users_order_by {
   bans_aggregate: bans_aggregate_order_by
   created_at: order_by
+  ctftime_username: order_by
   email: order_by
   email_verification_code: order_by
   first_name: order_by
@@ -3708,6 +4221,9 @@ select columns of table "users"
 enum users_select_column {
   """column name"""
   created_at
+
+  """column name"""
+  ctftime_username
 
   """column name"""
   email
@@ -3779,6 +4295,7 @@ input type for updating data in table "users"
 """
 input users_set_input {
   created_at: timestamptz
+  ctftime_username: String
   email: String
   email_verification_code: String
   first_name: String
@@ -3807,6 +4324,7 @@ input users_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input users_stream_cursor_value_input {
   created_at: timestamptz
+  ctftime_username: String
   email: String
   email_verification_code: String
   first_name: String
@@ -3827,6 +4345,9 @@ update columns of table "users"
 enum users_update_column {
   """column name"""
   created_at
+
+  """column name"""
+  ctftime_username
 
   """column name"""
   email

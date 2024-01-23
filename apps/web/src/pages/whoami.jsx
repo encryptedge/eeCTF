@@ -48,8 +48,8 @@ function WhoAmI() {
                 "Authorization": "Bearer " + token,
             }
         }).then(res => {
-            if(res.data.error) return window.location.href = '/login'
-            if(res.data.message === 'Invalid token') return window.location.href = '/login';
+            if(res.data.error) return window.location.href = '/'
+            if(res.data.message === 'Invalid token') return window.location.href = '/';
             setTeamStats(res.data.message);
         })
     }, [])
@@ -68,6 +68,8 @@ function WhoAmI() {
               {userWhoami?.first_name} {userWhoami?.last_name}
             </span>
             <br />
+            Email: <span className='user-email'>{userWhoami?.email}</span>
+            <br />
           </div>
           <div className='team-wrapper'>
             <h2>$ Team</h2>
@@ -75,10 +77,16 @@ function WhoAmI() {
             <br />
             Name: <span className='team-name'>{teamWhoami?.name}</span>
             <br />
+            Join Code: <span className='team-join-code'>{teamWhoami?.join_code}</span>
+            <br />
+            Total Member: <span className='team-total-member'>{teamWhoami?.users?.length}</span>
           </div>
         </div>
         <div className='stats-wrapper'>
           <h2>$ Stats</h2>
+          <h4>
+            Total Score : {teamStats?.score}
+          </h4>
           <table>
             <thead>
               <tr>

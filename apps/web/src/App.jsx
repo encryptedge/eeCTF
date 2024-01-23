@@ -1,4 +1,3 @@
-// App.js
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Player from "./pages/app";

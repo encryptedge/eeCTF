@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import apiClient from "../libs/api.client";
 import Navbar from "../components/navbar";
@@ -18,8 +17,8 @@ function Leaderboard() {
         },
       })
       .then((response) => {
-        if (!Array.isArray(response.data)) return (window.location.href = "/");
-        setLeaderboard(response.data);
+        if (!Array.isArray(response.data.message)) return (window.location.href = "/");
+        setLeaderboard(response.data.message);
       })
       .catch(() => {
         console.log("Failed to get leaderboard");
