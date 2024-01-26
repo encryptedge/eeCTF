@@ -79,6 +79,8 @@ interface IParedMachineProgress {
     challenges?: IParsedChallengeProgress[];
     total_challenges?: number;
     depends_on?: string;
+    tags?: string;
+    no_of_solves?: number;
 }
 
 interface IParsedChallengeProgress {

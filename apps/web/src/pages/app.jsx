@@ -3,6 +3,7 @@ import Machines from "../components/machine";
 import Challenge from "../components/challenge";
 import { ToastContainer } from "react-toastify";
 import apiClient from "../libs/api.client";
+import Navbar from "../components/navbar";
 
 function Player() {
   const token = localStorage.getItem("token");
@@ -32,7 +33,7 @@ function Player() {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className='player-component'>
         <div className='player-machine-section'>
           <div className='player-machine-detail'>
@@ -54,7 +55,7 @@ function Player() {
         </div>
         <div className='player-challenge-detail-section'>
           <div className='player-challenge-detail'>
-            {currentChallenge[0] > -1 && currentChallenge[1] > -1 && (
+            {currentChallenge[0] > -1 && currentChallenge[1] > -1 ? (
               <Challenge
                 desp={
                   machines[currentChallenge[0]].challenges[currentChallenge[1]]
@@ -69,8 +70,7 @@ function Player() {
                     .point
                 }
                 tags={
-                  machines[currentChallenge[0]].challenges[currentChallenge[1]]
-                    .tags
+                  machines[currentChallenge[0]].tags
                 }
                 id={
                   machines[currentChallenge[0]].challenges[currentChallenge[1]]
@@ -86,6 +86,10 @@ function Player() {
                     .solved
                 }
               />
+            ):(
+              <div style={{height:"100%", alignItems:"center", width:"100%", display:"flex", justifyContent:"center"}}>
+                <h1 style={{textAlign:"center", color:"red"}}>Select a challenge to view</h1>
+              </div>
             )}
           </div>
         </div>

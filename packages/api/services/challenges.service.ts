@@ -313,6 +313,8 @@ export class ChallengeService {
                               description
                           }
                           depends_on
+                          tags
+                          no_of_solves
                       }
 
                       scores(where: {
@@ -362,6 +364,7 @@ export class ChallengeService {
                             challenges: [],
                             total_challenges: total_machines_progress[machine.id],
                             depends_on: machine.depends_on ?? "",
+                            tags: machine.tags,
                         };
 
                         for(const challenge of machine.challenges) {

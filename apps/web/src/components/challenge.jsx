@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -66,20 +67,34 @@ const Challenge = ({ id, name, madeby, tags, desp, point, setMachines, solved })
             <div className='player-challenge-name'>
                 <h1>{name}</h1>
                 <h3>{madeby}</h3>
-                <h4>{tags} {point}</h4>
+                <h4 style={{marginBottom:"3em"}}>
+                   <p>
+                    {tags?.split(',').map((tag, index) => (
+                        <span key={index} style={{backgroundColor:"green", fontSize:"1.5em", padding:"0.5em", borderRadius:"3px", marginRight:"0.5em"}}>
+                            {tag}
+
+                            </span>
+                    ))}
+                    </p> 
+                    <br />
+                <span style={{backgroundColor:"red", fontSize:"2em", padding:"0.5em", borderRadius:"3px", marginTop:"2em"}}>
+                    {point}
+                </span>
+                </h4>
             </div>
             <div className='player-challenge-description'>
-                <p>{desp}</p>
+                <p style={{fontSize:"1.5em"}}>{desp}</p>
                 <br />
                 <div>
-                    <h3>Submit Flag</h3>
+                    <h3 style={{fontSize:"1.4em"}}>Submit Flag</h3>
                     <input 
                         type='text'
                         placeholder='eeCTF{}'
                         value={flagToSubmit}
                         onChange={(event) => setFlagToSubmit(event.target.value)}
+                        style={{width:"40%", height:"1.3em", fontSize:"1.5em"}}
                     />
-                    <button onClick={handleSubmit} disabled={solved}>Submit</button>
+                    <button onClick={handleSubmit} disabled={solved} style={{backgroundColor:"green", color:"white", marginLeft:"1em"}}>Submit</button>
                 </div>
             </div>
         </>
