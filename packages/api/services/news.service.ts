@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
 import { SnowflakeId } from "hyperflake";
 
-import { Query_Root, Mutation_Root } from "../graphql/types";
+import { Mutation_Root,Query_Root } from "../graphql/types";
 import { client } from "../helpers/gqlClient";
 import { notifyForNews } from "../helpers/notifyNews";
 
@@ -27,12 +27,10 @@ export class NewsService {
             }
 
             return news;
-        } catch (error) {
-            if(error instanceof Error) {
-                throw new TypeError(error.message);
-            }
+        } catch (error: any) {
+            throw error.response ? new Error(error.response.errors[0].message) : new Error(error.message);
         }
-    }
+    };
 
     public addNewsS = async (msg: string) => {
         try {
@@ -62,10 +60,8 @@ export class NewsService {
             });
 
             return insert_news_one;
-        } catch (error) {
-            if(error instanceof Error) {
-                throw new TypeError(error.message);
-            }
+        } catch (error: any) {
+            throw error.response ? new Error(error.response.errors[0].message) : new Error(error.message);
         }
-    }
+    };
 }
