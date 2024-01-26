@@ -24,7 +24,7 @@ const Challenge = ({ id, name, madeby, tags, desp, point, setMachines, solved })
         
         axios.request(config)
             .then((response) => {
-                if (response.data.message === 'GG!') {
+                if (response.data.data.message === 'GG!') {
                     if(!localStorage.getItem('token')) return window.location.href = '/login';
                     toast.success('Correct Flag!', {
                         position: "bottom-right",
